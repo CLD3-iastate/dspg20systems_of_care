@@ -1,24 +1,32 @@
-#Sidebar for panel selection
-
-
 sidebar <- dashboardSidebar(
   
   sidebarMenu(
-    menuItem("Project Description", icon = icon("diagnoses"), tabName = "description"),
-    menuItem("Hospitals", icon = icon("map"), tabName = 'hospitals'),
-    menuItem("Health Clinics", icon = icon("leaf"), tabName = "health"),
-    menuItem("Iowa Works", icon = icon("leaf"), tabName = "iaworks"),
-    menuItem("Multi Layer Plotting", icon = icon("layer-group"), tabName = "multiple")
+    
+    menuItem("Project Descriptions", icon = icon(" fa-file-text "), tabName = "description"),
+    
+    
+    menuItem("Syscare", icon = icon("leaf"),
+             menuSubItem("Panel 1", tabName = "syscare_1", icon = icon("angle-right")),
+             menuSubItem("Panel 2", tabName = "syscare_2", icon = icon("angle-right")),
+             menuSubItem("Panel 3", tabName = "syscare_3", icon = icon("angle-right")),
+             menuSubItem("Panel 4", tabName = "syscare_4", icon = icon("angle-right"))),
+    
+    menuItem("Recovery", icon = icon("leaf"),
+             menuSubItem("Panel 1", tabName = "recovery_1", icon = icon("angle-right")),
+             menuSubItem("Panel 2", tabName = "recovery_2", icon = icon("angle-right")),
+             menuSubItem("Panel 3", tabName = "recovery_3", icon = icon("angle-right")),
+             menuSubItem("Panel 4", tabName = "recovery_4", icon = icon("angle-right"))),
+    
+    menuItem("Acknowledgements", icon = icon("star"), tabName = "credit")
   )
   
 )
 
-#--------------------------------------------------------------------------------------------#
-
-#Main body with multiple panel options
+#------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 body <- dashboardBody(
   tabItems(
+    
     tabItem(tabName = "description",
             fluidRow(
               boxPlus(
@@ -28,157 +36,144 @@ body <- dashboardBody(
                 status = "warning",
                 solidHeader = TRUE,
                 collapsible = TRUE,
-                h1("2020 DSPG Syscare"),
-                
+                h1("2020 DSPG Project Name"),
                 h2("Project Description"),
-                p("Formal Systems of Care Infrastructure"),
-                
+                p("Example text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in varius purus. Nullam ut sodales ante. Fusee justo nisi, suscipit a lacus et, posuere sagittis ex."),
                 h2("Project Goals"),
-                p("The larger objectives of this contract is lower substance use relapse among Iowan’s by strengthening and expanding substanceabuse recovery services, infrastructure, and programming in Iowa. 
-                  The specific goal of the project is to facilitate the development of Recovery Community Centers in Iowa."),
-                
+                p("Example text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in varius purus. Nullam ut sodales ante. Fusee justo nisi, suscipit a lacus et, posuere sagittis ex."),
                 h2("Our Approach"),
-                p("To identify data sources containing geospatial information regardingformal systems of care (FSC) and community resources that are beneficial to people recovering from a significant shock that causes harm on multiple fronts (mental, physical, emotional, and spiritual wellbeing, employment and\or marital status, housing security, incarceration, etc.). 
-                  Steps involved: 
-                  
-                  a) Identify FSCs in Iowa
-                  b) Collect metadata on FSCs (e.g. name, address, type of care)
-                  c) Consolidatethe data together in a structured database that supports statistical and spatial analysis"),
-                
+                p("Example text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in varius purus. Nullam ut sodales ante. Fusee justo nisi, suscipit a lacus et, posuere sagittis ex."),
                 h2("Ethical Considerations"),
-                p("We took the utmost caution when it came to the privacy of our clients data.")
+                p("Example text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in varius purus. Nullam ut sodales ante. Fusee justo nisi, suscipit a lacus et, posuere sagittis ex.")
+              )
+            )),
+    
+    
+    
+    tabItem(tabName = 'syscare_1', #Panel 1
+            
+            
+            fluidRow(
+              
+              box(
+                title = "(I)owa (H)ospital (I)nformation (S)ystem",
+                status = "warning",
+                width = NULL,
+                fluidRow(
+                  column(
+                    width = 3,
+                    boxPad(
+                      color = "grey",
+                      
+                      
+                      
+                      selectInput(inputId = "value", label = strong("Select Graph Type"),
+                                  choices = c("Point", "choropleth_bed_cap", "choropleth_log_1000"),
+                                  selected = NULL, multiple = FALSE, selectize = TRUE)
+                      
+                    )
+                  ),
+                  column(
+                    width = 9,
+                    leafletOutput("hospital_leafy", height = "500px")
+                  )
+                )
+              )
+            )),
+    
+    tabItem(tabName = 'syscare_2',  #Panel 2
+            
+            fluidRow(
+              
+              box(
+                title = "Health Clinic Information System",
+                status = "warning",
+                width = NULL,
+                fluidRow(
+                  column(
+                    width = 3,
+                    boxPad(
+                      color = "grey",
+                      
+                      selectInput(inputId = "county2", label = strong("Select a County"),
+                                  choices = unique(health_clinics$county),
+                                  selected = NULL)
+                    )
+                  ),
+                  column(
+                    width = 9,
+                    leafletOutput("health_leafy", height = "500px")
+                  )
+                )
+              )
+            )),
+    
+    tabItem(tabName = 'syscare_3',  #Panel 3#######################################################
+            
+            fluidRow(
+              
+              box(
+                title = "General Well Being",
+                status = "warning",
+                width = NULL,
+                fluidRow(
+                  column(
+                    width = 3,
+                    boxPad(
+                      color = "grey"
+                    )
+                  ),
+                  column(
+                    width = 9,
+                    leafletOutput("iaworks_leafy", height = "500px")
+                  )
+                )
+              )
+            ),
+            
+            fluidRow(
+              dataTableOutput("iaworks_table"), style = "overflow-x: scroll;"
+            )),
+    
+    tabItem(tabName = 'syscare_4',  #Panel 4#######################################################
+            
+            fluidRow(
+              
+              box(
+                title = "Mental Heath and Disability Services",
+                status = "warning",
+                width = NULL,
+                fluidRow(
+                  column(
+                    width = 3,
+                    boxPad(
+                      color = "grey"
+                      
+                      
+                    )
+                  ),
+                  column(
+                    width = 9,
+                    leafletOutput("change", height = "500px")
+                  )
+                )
+              )
             )
+            
+            
+    )
   )
   
-),
-
-
-tabItem(tabName = 'hospitals', #Panel 1
-        
-        
-        fluidRow(
-          
-          box(
-            title = "Iowa Hospitals Information System",
-            status = "warning",
-            width = NULL,
-            fluidRow(
-              column(
-                width = 3,
-                boxPad(
-                  color = "grey",
-                  
-                  
-                  
-                  selectInput(inputId = "value", label = strong("Select Graph Type"),
-                              choices = c("Point", "choropleth_bed_cap", "choropleth_log_1000"),
-                              selected = NULL, multiple = FALSE, selectize = TRUE)
-                  
-                )
-              ),
-              column(
-                width = 9,
-                leafletOutput("hospital_leafy", height = "500px")
-              )
-            )
-          )
-        )),
-
-tabItem(tabName = 'health',  #Panel 2
-        
-        fluidRow(
-          
-          box(
-            title = "Health Clinic Information System",
-            status = "warning",
-            width = NULL,
-            fluidRow(
-              column(
-                width = 3,
-                boxPad(
-                  color = "grey",
-                  
-                  selectInput(inputId = "county2", label = strong("Select a County"),
-                              choices = unique(health_clinics$COUNTY),
-                              selected = NULL)
-                )
-              ),
-              column(
-                width = 9,
-                leafletOutput("health_leafy", height = "500px")
-              )
-            )
-          )
-        )),
-
-tabItem(tabName = 'iaworks',  #Panel 3
-        
-        fluidRow(
-          
-          box(
-            title = "Health Clinic Information System",
-            status = "warning",
-            width = NULL,
-            fluidRow(
-              column(
-                width = 3,
-                boxPad(
-                  color = "grey",
-                  
-                  selectInput(inputId = "county3", label = strong("Select a County"),
-                              choices = unique(health_clinics$COUNTY),
-                              selected = NULL)
-                )
-              ),
-              column(
-                width = 9,
-                leafletOutput("iaworks_leafy", height = "500px")
-              )
-            )
-          )
-        ),
-        
-        fluidRow(
-          dataTableOutput("iaworks_table"), style = "overflow-x: scroll;"
-        )),
-
-tabItem(tabName = 'multiple',  #Panel 4
-        
-        fluidRow(
-          
-          box(
-            title = "To be continued",
-            status = "warning",
-            width = NULL,
-            fluidRow(
-              column(
-                width = 3,
-                boxPad(
-                  color = "grey"#,
-                  
-                  #selectInput(inputId = "county3", label = strong("Select a County"),
-                  # choices = unique(health_clinics$COUNTY),
-                  #selected = NULL)
-                )
-              ),
-              column(
-                width = 9,
-                leafletOutput("multiple_leafy", height = "500px")
-              )
-            )
-          )
-        ))
-
-
 )
-  )
 
 
-#-------------------------------------------------------------------------------------------------#
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 ui <- dashboardPage(
-  dashboardHeader(title = "Syscare Shiny App"),
+  dashboardHeader(title = "Syscare+Recovery Shiny App"),
   sidebar = sidebar,
   body = body,
   skin = "black"
 )
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------#
