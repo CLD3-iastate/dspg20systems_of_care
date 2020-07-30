@@ -8,7 +8,7 @@ server <- function(input, output){
   })
   
   
-#--------------------------------------------------------------------------------------------------#
+  #--------------------------------------------------------------------------------------------------#
   output$hospital_leafy <- renderLeaflet({
     
     if(input$value == "Point"){
@@ -204,6 +204,111 @@ server <- function(input, output){
     
   })
   
+  
+  output$change2 <- renderLeaflet({
+    
+    filter_checkbox <- c("Substance Use Treatment", "Recovery Housing", "Shelters")
+    
+    # Color palette
+    colors <- RColorBrewer::brewer.pal(n = length(filter_checkbox), name="Dark2")
+    
+    pal <- colorFactor(
+      palette = colors,
+      levels = filter_checkbox)
+    
+    # Edit starting dataframe and input for lng and lat inside addCircleMarkers to change data used
+    df %>%
+      leaflet() %>%
+      addTiles() %>%
+      # Use county border polygons from DSPG package
+      addPolygons(data = st_transform(ia_counties, crs='+proj=longlat +datum=WGS84'),
+                  weight = 1, color="#333333") %>%
+      addCircleMarkers(lng = ~lon, lat = ~lat,
+                       radius = 1, stroke = 1, fillOpacity = 0.7,color=~pal("Substance Use Treatment"),
+                       label = ~Name, data = Recovery_SU,
+                       group = "Substance Use Treatment") %>%
+      addCircleMarkers(lng = ~lon, lat = ~lat,
+                       radius = 1, stroke = 1, fillOpacity = 0.7,color=~pal("Recovery Housing"),
+                       label = ~Name, data = Recovery_RH,
+                       group = "Recovery Housing") %>%
+      addCircleMarkers(lng = ~lon, lat = ~lat,
+                       radius = 1, stroke = 1, fillOpacity = 0.7,color=~pal("Shelters"),
+                       label = ~Name, data = Recovery_S,
+                       group = "Shelters") %>%
+      addLayersControl(
+        overlayGroups = filter_checkbox,
+        options = layersControlOptions(collapsed = TRUE)
+      ) %>%
+      addLegend(
+        position = c("bottomright"), pal = pal, values = filter_checkbox
+      ) %>%
+      setView(lng = -93.645733, lat = 42.026234, zoom = 7)
+    
+    
+  })
+  
+  output$change3 <- renderLeaflet({
+    filter_checkbox <- c("Alcoholics Anonymous", "Adult children of Alcoholic", "Celebrate", "CRUSH", "IDRA", "Narcotics Anonymous", "Pills Anonymous", "Refuge Recovery", "SMART")
+    
+    # Color palette
+    colors <- RColorBrewer::brewer.pal(n = length(filter_checkbox), name="Spectral")
+    
+    pal <- colorFactor(
+      palette = colors,
+      levels = filter_checkbox)
+    
+    # Edit starting dataframe and input for lng and lat inside addCircleMarkers to change data used
+    df2 %>%
+      leaflet() %>%
+      addTiles() %>%
+      addPolygons(data = st_transform(ia_counties, crs='+proj=longlat +datum=WGS84'),
+                  weight = 1, color="#333333") %>%
+      addCircleMarkers(lng = ~lon, lat = ~lat,
+                       radius = 1, stroke =1, fillOpacity = 0.7, color=~pal("Alcoholics Anonymous"),
+                       label = ~Meeting, data= Meetings_AA,
+                       group = "Alcoholics Anonymous") %>%
+      addCircleMarkers(lng = ~lon, lat = ~lat,
+                       radius = 1, stroke =1, fillOpacity = 0.7, color=~pal("Adult children of Alcoholic"),
+                       label = ~Meeting, data= Meetings_AdultChildA,
+                       group = "Adult children of Alcoholic") %>%
+      addCircleMarkers(lng = ~lon, lat = ~lat,
+                       radius = 1, stroke =1, fillOpacity = 0.7, color=~pal("Celebrate"),
+                       label = ~Meeting, data= Meetings_Celebrate,
+                       group = "Celebrate") %>%
+      addCircleMarkers(lng = ~lon, lat = ~lat,
+                       radius = 1, stroke =1, fillOpacity = 0.7, color=~pal("CRUSH"),
+                       label = ~Meeting, data= Meetings_Crush,
+                       group = "CRUSH") %>%
+      addCircleMarkers(lng = ~lon, lat = ~lat,
+                       radius = 1, stroke =1, fillOpacity = 0.7, color=~pal("IDRA"),
+                       label = ~Meeting, data= Meetings_IDRA,
+                       group = "IDRA") %>%
+      addCircleMarkers(lng = ~lon, lat = ~lat,
+                       radius = 1, stroke =1, fillOpacity = 0.7, color=~pal("Narcotics Anonymous"),
+                       label = ~Meeting, data= Meetings_NarAnon,
+                       group = "Narcotics Anonymous") %>%
+      addCircleMarkers(lng = ~lon, lat = ~lat,
+                       radius = 1, stroke =1, fillOpacity = 0.7, color=~pal("Pills Anonymous"),
+                       label = ~Meeting, data= Meetings_PA,
+                       group = "Pills Anonymous") %>%
+      addCircleMarkers(lng = ~lon, lat = ~lat,
+                       radius = 1, stroke =1, fillOpacity = 0.7, color=~pal("Refuge Recovery"),
+                       label = ~Meeting, data= Meetings_RR,
+                       group = "Refuge Recovery") %>%
+      addCircleMarkers(lng = ~lon, lat = ~lat,
+                       radius = 1, stroke =1, fillOpacity = 0.7, color=~pal("SMART"),
+                       label = ~Meeting, data= Meetings_Smart,
+                       group = "SMART") %>%
+      addLayersControl(
+        overlayGroups = filter_checkbox,
+        options = layersControlOptions(collapsed = TRUE)
+      ) %>%
+      addLegend(
+        position = c("bottomright"), pal = pal, values = filter_checkbox
+      ) %>%
+      setView(lng = -93.645733, lat = 42.026234, zoom = 7)
+  })
+  
 }
 
-#--------------------------------------------------------------------------------------------------------------------------------------------------------#
+
