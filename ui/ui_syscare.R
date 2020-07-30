@@ -1,3 +1,4 @@
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 sidebar <- dashboardSidebar(
   
   sidebarMenu(
@@ -161,10 +162,81 @@ body <- dashboardBody(
             )
             
             
+    ), 
+    
+    tabItem(tabName = 'recovery_1',  
+            
+            fluidRow(
+              
+              box(
+                title = "Recovery data",
+                status = "warning",
+                width = NULL,
+                fluidRow(
+                  column(
+                    width = 3,
+                    boxPad(
+                      color = "grey"
+                      
+                      
+                    )
+                  ),
+                  column(
+                    width = 9,
+                    leafletOutput("change2", height = "500px")
+                  )
+                )
+              )
+            )
+            
+            
+    ),
+    
+    tabItem(tabName = 'recovery_2',  
+            
+            fluidRow(
+              
+              box(
+                title = "Recovery meeting data",
+                status = "warning",
+                width = NULL,
+                fluidRow(
+                  column(
+                    width = 3,
+                    boxPad(
+                      color = "grey"
+                      
+                      
+                    )
+                  ),
+                  column(
+                    width = 9,
+                    leafletOutput("change3", height = "500px")
+                  )
+                )
+              )
+            )
+            
+            
     )
   )
   
 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------#
