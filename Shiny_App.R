@@ -1,15 +1,31 @@
 #Load required Packages
 
-packages <- c("dplyr", "purrr", "readr", "stringr", "readr", "readxl",
-              "magrittr", "stringr", "ggplot2", "shiny", "sentimentr",
-              "shinythemes", "shinydashboard", "shinydashboardPlus", "plotly", "leaflet", "sf")
-
-for (pkgs in packages){
-  if(!require(pkgs, character.only = TRUE)){ # Condition 
-    install.packages(pkgs) # Install if not
-    library(pkgs) # Load if installed
-  }
-}
+library("dplyr")
+library("purrr")
+library("readr")
+library("stringr")
+#library("readxl")
+library("magrittr")
+library("ggplot2")
+library("shiny")
+#library("sentimentr")
+library("shinythemes")
+library("shindashboard")
+library("shinydashboardPlus")
+library("plotly")
+library("leaflet")
+library("sf")
+# packages <- c("dplyr", "purrr", "readr", "stringr", "readr", "readxl",
+#               "magrittr", "stringr", "ggplot2", "shiny", "sentimentr",
+#               "shinythemes", "shinydashboard", "shinydashboardPlus", 
+#               "plotly", "leaflet", "sf")
+# 
+# for (pkgs in packages){
+#   if(!require(pkgs, character.only = TRUE)){ # Condition 
+#     install.packages(pkgs) # Install if not
+#     library(pkgs) # Load if installed
+#   }
+# }
 
 library(DT)
 
@@ -17,6 +33,7 @@ library(shiny)
 library(shinydashboardPlus)
 library(shinydashboard)
 
+library(DSPG)
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 
@@ -60,7 +77,7 @@ datasets = c("Area Substance Abuse Council", "Community and Family Resources", "
 
 
 
-df <- read.csv('Reco_Data.csv')
+df <- recovery #read.csv('Reco_Data.csv')
 
 df = df[-c(144),]
 
@@ -71,19 +88,19 @@ Recovery_RH <- df[df$ServiceType == "RecoveryHousing", ]
 Recovery_S <- df[df$ServiceType == "Shelters", ]
 
 
-df2 <- read.csv('All_Meetings_Geocoded.csv')
+df2 <- meetings #read.csv('All_Meetings_Geocoded.csv')
 
 
 # Grouping Meetings data by type
-Meetings_AA <- filter(df2, df2$Type %in% c("Alcoholics Anonymous", "Al-anon"))
-Meetings_AdultChildA <- df2[df2$Type == "Adult children of alcoholic", ]
-Meetings_Celebrate <- df2[df2$Type == "Celebrate", ]
-Meetings_Crush <- df2[df2$Type == "CRUSH", ]
-Meetings_IDRA <- df2[df2$Type == "IDRA", ]
-Meetings_NarAnon <- filter(df2, df2$Type %in% c("Narcotics Anonymous", "Nar-Anon"))
-Meetings_PA <- df2[df2$Type == "Pills Anonymous", ]
-Meetings_RR <- df2[df2$Type == "Refuge Recovery", ]
-Meetings_Smart <- df2[df2$Type == "SMART", ]
+Meetings_AA <- filter(df2, df2$type %in% c("Alcoholics Anonymous", "Al-anon"))
+Meetings_AdultChildA <- df2[df2$type == "Adult children of alcoholic", ]
+Meetings_Celebrate <- df2[df2$type == "Celebrate", ]
+Meetings_Crush <- df2[df2$type == "CRUSH", ]
+Meetings_IDRA <- df2[df2$type == "IDRA", ]
+Meetings_NarAnon <- filter(df2, df2$type %in% c("Narcotics Anonymous", "Nar-Anon"))
+Meetings_PA <- df2[df2$type == "Pills Anonymous", ]
+Meetings_RR <- df2[df2$type == "Refuge Recovery", ]
+Meetings_Smart <- df2[df2$type == "SMART", ]
 
 
 
