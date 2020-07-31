@@ -397,6 +397,12 @@ server <- function(input, output){
         addLegend(
           position = c("bottomright"), pal = pal, values = filter_checkbox
         ) %>%
+        addEasyButton(easyButton(
+          icon="fa-globe", title="Zoom to Level 1",
+          onClick=JS("function(btn, map){ map.setZoom(1); }"))) %>%
+        addEasyButton(easyButton(
+          icon="fa-crosshairs", title="Locate Me",
+          onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
         setView(lng = -93.645733, lat = 42.026234, zoom = 7)
       
     }
@@ -495,6 +501,12 @@ server <- function(input, output){
       addLegend(
         position = c("bottomleft"), pal = pal, values = datasets
       ) %>%
+      addEasyButton(easyButton(
+        icon="fa-globe", title="Zoom to Level 1",
+        onClick=JS("function(btn, map){ map.setZoom(1); }"))) %>%
+      addEasyButton(easyButton(
+        icon="fa-crosshairs", title="Locate Me",
+        onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
       setView(lng = -93.645733, lat = 42.026234, zoom = 7)
     
   })
@@ -538,6 +550,12 @@ server <- function(input, output){
       addLegend(
         position = c("bottomleft"), pal = pal, values = datasets
       ) %>%
+      addEasyButton(easyButton(
+        icon="fa-globe", title="Zoom to Level 1",
+        onClick=JS("function(btn, map){ map.setZoom(1); }"))) %>%
+      addEasyButton(easyButton(
+        icon="fa-crosshairs", title="Locate Me",
+        onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
       setView(lng = -93.645733, lat = 42.026234, zoom = 7)
     
   
@@ -581,6 +599,12 @@ server <- function(input, output){
       addLegend(
         position = c("bottomright"), pal = pal, values = filter_checkbox
       ) %>%
+      addEasyButton(easyButton(
+        icon="fa-globe", title="Zoom to Level 1",
+        onClick=JS("function(btn, map){ map.setZoom(1); }"))) %>%
+      addEasyButton(easyButton(
+        icon="fa-crosshairs", title="Locate Me",
+        onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
       setView(lng = -93.645733, lat = 42.026234, zoom = 7)
     
     
@@ -645,6 +669,12 @@ server <- function(input, output){
       addLegend(
         position = c("bottomright"), pal = pal, values = filter_checkbox
       ) %>%
+      addEasyButton(easyButton(
+        icon="fa-globe", title="Zoom to Level 1",
+        onClick=JS("function(btn, map){ map.setZoom(1); }"))) %>%
+      addEasyButton(easyButton(
+        icon="fa-crosshairs", title="Locate Me",
+        onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
       setView(lng = -93.645733, lat = 42.026234, zoom = 7)
   })
 
