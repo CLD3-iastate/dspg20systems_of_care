@@ -15,17 +15,17 @@ library("shinydashboardPlus")
 library("plotly")
 library("leaflet")
 library("sf")
-# packages <- c("dplyr", "purrr", "readr", "stringr", "readr", "readxl",
-#               "magrittr", "stringr", "ggplot2", "shiny", "sentimentr",
-#               "shinythemes", "shinydashboard", "shinydashboardPlus", 
-#               "plotly", "leaflet", "sf")
-# 
-# for (pkgs in packages){
-#   if(!require(pkgs, character.only = TRUE)){ # Condition 
-#     install.packages(pkgs) # Install if not
-#     library(pkgs) # Load if installed
-#   }
-# }
+ packages <- c("dplyr", "purrr", "stringr", "readxl",
+               "magrittr", "stringr", "ggplot2", "shiny", "sentimentr",
+               "shinythemes", "shinydashboard", "shinydashboardPlus", 
+               "plotly", "leaflet", "sf")
+ 
+ for (pkgs in packages){
+  if(!require(pkgs, character.only = TRUE)){ # Condition 
+     install.packages(pkgs) # Install if not
+     library(pkgs) # Load if installed
+   }
+ }
 
 library(DT)
 
@@ -116,7 +116,13 @@ sidebar <- dashboardSidebar(
              menuSubItem("Panel 1", tabName = "syscare_1", icon = icon("angle-right")),
              menuSubItem("Panel 2", tabName = "syscare_2", icon = icon("angle-right")),
              menuSubItem("Panel 3", tabName = "syscare_3", icon = icon("angle-right")),
-             menuSubItem("Panel 4", tabName = "syscare_4", icon = icon("angle-right"))),
+             menuSubItem("Panel 4", tabName = "syscare_4", icon = icon("angle-right")),
+             menuSubItem("abstinence-from-substance", tabName = "syscare_5", icon = icon("angle-right")),
+             menuSubItem("community-services", tabName = "syscare_6", icon = icon("angle-right")),
+             menuSubItem("improved-health", tabName = "syscare_7", icon = icon("angle-right")),
+             menuSubItem("quality-of-life", tabName = "syscare_8", icon = icon("angle-right")),
+             menuSubItem("social-connectedness", tabName = "syscare_9", icon = icon("angle-right")),
+             menuSubItem("employment-education", tabName = "syscare_10", icon = icon("angle-right"))),
     
     menuItem("Recovery", icon = icon("leaf"),
              menuSubItem("Panel 1", tabName = "recovery_1", icon = icon("angle-right")),
@@ -268,7 +274,174 @@ body <- dashboardBody(
             )
             
 
-          ), 
+          ),
+    tabItem(tabName = 'syscare_5',  #Panel 4#######################################################
+            
+            fluidRow(
+              
+              box(
+                title = "Abstinence from Substance Locations",
+                status = "warning",
+                width = NULL,
+                fluidRow(
+                  column(
+                    width = 3,
+                    boxPad(
+                      color = "grey"
+                      
+                      
+                    )
+                  ),
+                  column(
+                    width = 9,
+                    leafletOutput("abstinence", height = "500px")
+                  )
+                )
+              )
+            )
+            
+            
+    ),
+    
+    tabItem(tabName = 'syscare_6',  #Panel 4#######################################################
+            
+            fluidRow(
+              
+              box(
+                title = "Community Service locations",
+                status = "warning",
+                width = NULL,
+                fluidRow(
+                  column(
+                    width = 3,
+                    boxPad(
+                      color = "grey"
+                      
+                      
+                    )
+                  ),
+                  column(
+                    width = 9,
+                    leafletOutput("community", height = "500px")
+                  )
+                )
+              )
+            )
+            
+            
+    ),
+    
+    tabItem(tabName = 'syscare_7',  #Panel 4#######################################################
+            
+            fluidRow(
+              
+              box(
+                title = "Improved Health Locations",
+                status = "warning",
+                width = NULL,
+                fluidRow(
+                  column(
+                    width = 3,
+                    boxPad(
+                      color = "grey"
+                      
+                      
+                    )
+                  ),
+                  column(
+                    width = 9,
+                    leafletOutput("improve", height = "500px")
+                  )
+                )
+              )
+            )
+            
+            
+    ),
+    
+    tabItem(tabName = 'syscare_8',  #Panel 4#######################################################
+            
+            fluidRow(
+              
+              box(
+                title = "Quality of Life locations",
+                status = "warning",
+                width = NULL,
+                fluidRow(
+                  column(
+                    width = 3,
+                    boxPad(
+                      color = "grey"
+                      
+                      
+                    )
+                  ),
+                  column(
+                    width = 9,
+                    leafletOutput("quality", height = "500px")
+                  )
+                )
+              )
+            )
+            
+            
+    ),
+    
+    tabItem(tabName = 'syscare_9',  #Panel 4#######################################################
+            
+            fluidRow(
+              
+              box(
+                title = "Social Connectedness Locations",
+                status = "warning",
+                width = NULL,
+                fluidRow(
+                  column(
+                    width = 3,
+                    boxPad(
+                      color = "grey"
+                      
+                      
+                    )
+                  ),
+                  column(
+                    width = 9,
+                    leafletOutput("social", height = "500px")
+                  )
+                )
+              )
+            )
+            
+            
+    ),
+    
+    tabItem(tabName = 'syscare_10',  #Panel 4#######################################################
+            
+            fluidRow(
+              
+              box(
+                title = "Employment Education Locations",
+                status = "warning",
+                width = NULL,
+                fluidRow(
+                  column(
+                    width = 3,
+                    boxPad(
+                      color = "grey"
+                      
+                      
+                    )
+                  ),
+                  column(
+                    width = 9,
+                    leafletOutput("employment", height = "500px")
+                  )
+                )
+              )
+            )
+            
+            
+    ),
     
     tabItem(tabName = 'recovery_1',  
             
@@ -579,6 +752,229 @@ server <- function(input, output){
   })
   
   
+  #-----------------------------------------------------------------------------------------------------#
+  
+  output$abstinence <- renderLeaflet({
+    
+    datasets = c("Regional Substance Use Treatment Facilities", "Crug Drop Off Sites", "MAT Locations", "Substance Use/Problem Gambling Recovery")
+    colors <- RColorBrewer::brewer.pal(n = length(datasets), name="Dark2")
+    
+    pal <- colorFactor(
+      palette = colors,
+      levels = datasets)
+    
+    
+    # Create point map with the regional datasets colored differently
+    leaflet() %>%
+      addTiles() %>%
+      addPolygons(data = st_transform(ia_counties, crs='+proj=longlat +datum=WGS84'),
+                  weight = 1, color="#333333") %>%
+      addCircleMarkers(lng = ~longitude, lat = ~latitude, label = ~location_name,
+                       radius = 1, stroke = 1, color = ~pal(datasets[1]), fillOpacity = 0.75,
+                       data = regional_substance_treatment,
+                       group = datasets[1]) %>%
+      addCircleMarkers(lng = ~longitude, lat = ~latitude, label = ~name,
+                       radius = 1, stroke = 1, color = ~pal(datasets[2]), fillOpacity = 0.25,
+                       data = Rx_Drop_Off_Locations,
+                       group = datasets[2]) %>%
+      addCircleMarkers(lng = ~longitude, lat = ~latitude, label = ~center,
+                       radius = 1, stroke = 1, color = ~pal(datasets[3]), fillOpacity = 0.25,
+                       data = mat_locations,
+                       group = datasets[3]) %>%
+      addCircleMarkers(lng = ~longitude, lat = ~latitude, label = ~name,
+                       radius = 1, stroke = 1, color = ~pal(datasets[4]), fillOpacity = 0.25,
+                       data = gambling,
+                       group = datasets[4]) %>%
+      addLayersControl(
+        overlayGroups = datasets,
+        options = layersControlOptions(collapsed = TRUE)
+      ) %>%
+      addLegend(
+        position = c("bottomleft"), pal = pal, values = datasets, opacity = 0.9
+      ) %>%
+      setView(lng = -93.645733, lat = 42.026234, zoom = 7)
+    
+    
+    
+  })
+  
+  
+  output$community <- renderLeaflet({
+    
+    
+    leaflet() %>%
+      addTiles() %>%
+      addPolygons(data = st_transform(ia_counties, crs='+proj=longlat +datum=WGS84'),
+                  weight = 1, color="#333333") %>%
+      addCircleMarkers(lng = ~longitude, lat = ~latitude, label = ~name,
+                       radius = 1, stroke = 1, fillOpacity = 0.75,
+                       data = iowa_211)
+    
+    
+  })
+  
+  
+  output$improve <- renderLeaflet({
+    
+    datasets = c("Rural Health Clinics", "Iowa Hospitals", "Iowa Hospitals - OfficialUSA", "Iowa Hospitals and Medical Centers", "General Health Clinics", "VA Clinics", "Childcare Providers", "Medical Facilities")
+    colors <- RColorBrewer::brewer.pal(n = length(datasets), name="Dark2")
+    
+    pal <- colorFactor(
+      palette = colors,
+      levels = datasets)
+    
+    
+    # Create point map with the regional datasets colored differently
+    leaflet() %>%
+      addTiles() %>%
+      addPolygons(data = st_transform(ia_counties, crs='+proj=longlat +datum=WGS84'),
+                  weight = 1, color="#333333") %>%
+      addCircleMarkers(lng = ~longitude, lat = ~latitude, label = ~name,
+                       radius = 1, stroke = 1, color = ~pal(datasets[1]), fillOpacity = 0.75,
+                       data = health.clinics,
+                       group = datasets[1]) %>%
+      addCircleMarkers(lng = ~longitude, lat = ~latitude, label = ~name,
+                       radius = 1, stroke = 1, color = ~pal(datasets[2]), fillOpacity = 0.25,
+                       data = hospitals,
+                       group = datasets[2]) %>%
+      addCircleMarkers(lng = ~longitude, lat = ~latitude, label = ~hospital_name,
+                       radius = 1, stroke = 1, color = ~pal(datasets[3]), fillOpacity = 0.25,
+                       data = official_usa,
+                       group = datasets[3]) %>%
+      #addCircleMarkers(lng = ~longitude, lat = ~latitude, label = ~name,
+      #                radius = 1, stroke = 1, color = ~pal(datasets[4]), fillOpacity = 0.25,
+      #               data = wiki_hospitals,
+      #              group = datasets[4]) %>%
+      #addCircleMarkers(lng = ~longitude, lat = ~latitude, label = ~location_name,
+      #                radius = 1, stroke = 1, color = ~pal(datasets[5]), fillOpacity = 0.75,
+      #               data = regional_substance_treatment,
+      #              group = datasets[5]) %>%
+      addCircleMarkers(lng = ~longitude, lat = ~latitude, label = ~facility,
+                       radius = 1, stroke = 1, color = ~pal(datasets[6]), fillOpacity = 0.25,
+                       data = va_medical_centers,
+                       group = datasets[6]) %>%
+      #addCircleMarkers(lng = ~longitude, lat = ~latitude, label = ~center,
+      #                radius = 1, stroke = 1, color = ~pal(datasets[7]), fillOpacity = 0.25,
+      #               data = mat_locations,
+      #              group = datasets[7]) %>%
+      addCircleMarkers(label = ~name,
+                       radius = 1, stroke = 1, color = ~pal(datasets[8]), fillOpacity = 0.001,
+                       data = hospital_buildings,
+                       group = datasets[8]) %>%
+      addLayersControl(
+        overlayGroups = datasets,
+        options = layersControlOptions(collapsed = TRUE)
+      ) %>%
+      addLegend(
+        position = c("bottomleft"), pal = pal, values = datasets, opacity = 0.9
+      ) %>%
+      setView(lng = -93.645733, lat = 42.026234, zoom = 7)
+    
+  })
+  
+  output$quality <- renderLeaflet({
+    
+    datasets = c("MHDS Regional Access Points", "Southwest Iowa Resource Directory Locations", "South Central Iowa Resource Directory Locations")
+    colors <- RColorBrewer::brewer.pal(n = length(datasets), name="Dark2")
+    
+    pal <- colorFactor(
+      palette = colors,
+      levels = datasets)
+    
+    
+    # Create point map with the regional datasets colored differently
+    leaflet() %>%
+      addTiles() %>%
+      addPolygons(data = st_transform(ia_counties, crs='+proj=longlat +datum=WGS84'),
+                  weight = 1, color="#333333") %>%
+      addCircleMarkers(lng = ~longitude, lat = ~latitude, label = ~name,
+                       radius = 1, stroke = 1, color = ~pal("MHDS Regional Access Points"), fillOpacity = 1,
+                       data = regional_MHDS,
+                       group = "MHDS Regional Access Points") %>%
+      addCircleMarkers(lng = ~longitude, lat = ~latitude, label = ~`service title`,
+                       radius = 1, stroke = 1, color = ~pal("Southwest Iowa Resource Directory Locations"), fillOpacity = 0.25,
+                       data = southwest_mhds,
+                       group = "Southwest Iowa Resource Directory Locations") %>%
+      addCircleMarkers(lng = ~longitude, lat = ~latitude, label = ~agency,
+                       radius = 1, stroke = 1, color = ~pal("South Central Iowa Resource Directory Locations"), fillOpacity = 0.25,
+                       data = scbhr_mhds,
+                       group = "South Central Iowa Resource Directory Locations") %>%
+      addLayersControl(
+        overlayGroups = datasets,
+        options = layersControlOptions(collapsed = TRUE)
+      ) %>%
+      addLegend(
+        position = c("bottomleft"), pal = pal, values = datasets, opacity = 0.9
+      ) %>%
+      setView(lng = -93.645733, lat = 42.026234, zoom = 7)
+    
+    
+    
+  })
+  
+  
+  output$social <- renderLeaflet({
+    
+    leaflet() %>%
+      addTiles() %>%
+      addPolygons(data = st_transform(ia_counties, crs='+proj=longlat +datum=WGS84'),
+                  weight = 1, color="#333333") %>%
+      addCircleMarkers(label = ~name,
+                       radius = 1, stroke = 1, fillOpacity = 0.75,
+                       data = churches)
+    
+    
+  })
+  
+  
+  output$employment <- renderLeaflet({
+    
+    
+    datasets = c("Iowa Works Offices", "Iowa Colleges and Universities")
+    colors <- RColorBrewer::brewer.pal(n = length(datasets), name="Dark2")
+    
+    pal <- colorFactor(
+      palette = colors,
+      levels = datasets)
+    
+    
+    # Create point map with the regional datasets colored differently
+    leaflet() %>%
+      addTiles() %>%
+      addPolygons(data = st_transform(ia_counties, crs='+proj=longlat +datum=WGS84'),
+                  weight = 1, color="#333333") %>%
+      addCircleMarkers(lng = ~Longitude, lat = ~Latitude, label = ~NAME,
+                       radius = 1, stroke = 1, color = ~pal(datasets[1]), fillOpacity = 1,
+                       data = iowaworks,
+                       group = datasets[1]) %>%
+      addCircleMarkers(lng = ~longitude, lat = ~latitude, label = ~name,
+                       radius = 1, stroke = 1, color = ~pal(datasets[2]), fillOpacity = 1,
+                       data = colleges,
+                       group = datasets[2]) %>%
+      addLayersControl(
+        overlayGroups = datasets,
+        options = layersControlOptions(collapsed = TRUE)
+      ) %>%
+      addLegend(
+        position = c("bottomleft"), pal = pal, values = datasets, opacity = 0.9
+      ) %>%
+      setView(lng = -93.645733, lat = 42.026234, zoom = 7)
+ 
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  #-----------------------------------------------------------------------------------------------------#
+  
+  
   output$change2 <- renderLeaflet({
     
     filter_checkbox <- c("Substance Use Treatment", "Recovery Housing", "Shelters")
@@ -597,15 +993,15 @@ server <- function(input, output){
       # Use county border polygons from DSPG package
       addPolygons(data = st_transform(ia_counties, crs='+proj=longlat +datum=WGS84'),
                   weight = 1, color="#333333") %>%
-      addCircleMarkers(lng = ~lon, lat = ~lat,
+      addCircleMarkers(lng = ~longitude, lat = ~latitude,
                        radius = 1, stroke = 1, fillOpacity = 0.7,color=~pal("Substance Use Treatment"),
                        label = ~Name, data = Recovery_SU,
                        group = "Substance Use Treatment") %>%
-      addCircleMarkers(lng = ~lon, lat = ~lat,
+      addCircleMarkers(lng = ~longitude, lat = ~latitude,
                        radius = 1, stroke = 1, fillOpacity = 0.7,color=~pal("Recovery Housing"),
                        label = ~Name, data = Recovery_RH,
                        group = "Recovery Housing") %>%
-      addCircleMarkers(lng = ~lon, lat = ~lat,
+      addCircleMarkers(lng = ~longitude, lat = ~latitude,
                        radius = 1, stroke = 1, fillOpacity = 0.7,color=~pal("Shelters"),
                        label = ~Name, data = Recovery_S,
                        group = "Shelters") %>%
@@ -643,39 +1039,39 @@ server <- function(input, output){
       addTiles() %>%
       addPolygons(data = st_transform(ia_counties, crs='+proj=longlat +datum=WGS84'),
                   weight = 1, color="#333333") %>%
-      addCircleMarkers(lng = ~lon, lat = ~lat,
+      addCircleMarkers(lng = ~longitude, lat = ~latitude,
                        radius = 1, stroke =1, fillOpacity = 0.7, color=~pal("Alcoholics Anonymous"),
                        label = ~Meeting, data= Meetings_AA,
                        group = "Alcoholics Anonymous") %>%
-      addCircleMarkers(lng = ~lon, lat = ~lat,
+      addCircleMarkers(lng = ~longitude, lat = ~latitude,
                        radius = 1, stroke =1, fillOpacity = 0.7, color=~pal("Adult children of Alcoholic"),
                        label = ~Meeting, data= Meetings_AdultChildA,
                        group = "Adult children of Alcoholic") %>%
-      addCircleMarkers(lng = ~lon, lat = ~lat,
+      addCircleMarkers(lng = ~longitude, lat = ~latitude,
                        radius = 1, stroke =1, fillOpacity = 0.7, color=~pal("Celebrate"),
                        label = ~Meeting, data= Meetings_Celebrate,
                        group = "Celebrate") %>%
-      addCircleMarkers(lng = ~lon, lat = ~lat,
+      addCircleMarkers(lng = ~longitude, lat = ~latitude,
                        radius = 1, stroke =1, fillOpacity = 0.7, color=~pal("CRUSH"),
                        label = ~Meeting, data= Meetings_Crush,
                        group = "CRUSH") %>%
-      addCircleMarkers(lng = ~lon, lat = ~lat,
+      addCircleMarkers(lng = ~longitude, lat = ~latitude,
                        radius = 1, stroke =1, fillOpacity = 0.7, color=~pal("IDRA"),
                        label = ~Meeting, data= Meetings_IDRA,
                        group = "IDRA") %>%
-      addCircleMarkers(lng = ~lon, lat = ~lat,
+      addCircleMarkers(lng = ~longitude, lat = ~latitude,
                        radius = 1, stroke =1, fillOpacity = 0.7, color=~pal("Narcotics Anonymous"),
                        label = ~Meeting, data= Meetings_NarAnon,
                        group = "Narcotics Anonymous") %>%
-      addCircleMarkers(lng = ~lon, lat = ~lat,
+      addCircleMarkers(lng = ~longitude, lat = ~latitude,
                        radius = 1, stroke =1, fillOpacity = 0.7, color=~pal("Pills Anonymous"),
                        label = ~Meeting, data= Meetings_PA,
                        group = "Pills Anonymous") %>%
-      addCircleMarkers(lng = ~lon, lat = ~lat,
+      addCircleMarkers(lng = ~longitude, lat = ~latitude,
                        radius = 1, stroke =1, fillOpacity = 0.7, color=~pal("Refuge Recovery"),
                        label = ~Meeting, data= Meetings_RR,
                        group = "Refuge Recovery") %>%
-      addCircleMarkers(lng = ~lon, lat = ~lat,
+      addCircleMarkers(lng = ~longitude, lat = ~latitude,
                        radius = 1, stroke =1, fillOpacity = 0.7, color=~pal("SMART"),
                        label = ~Meeting, data= Meetings_Smart,
                        group = "SMART") %>%
