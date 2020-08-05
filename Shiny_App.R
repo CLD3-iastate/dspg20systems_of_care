@@ -520,7 +520,26 @@ body <- dashboardBody(
             )
             
             
-    )
+    ),
+    
+    tabItem(tabName = "credit",
+     fluidRow(
+       boxPlus(
+         title = "Acknowledgements",
+         closable = FALSE,
+         width = NULL,
+         status = "warning",
+         solidHeader = TRUE,
+         collapsible = TRUE,
+         h2("Recovery & Systems of Care Team Members"),
+         img(src='myImage.png', align = "left"), img(src='myImage.png', align = "middle"), img(src='myImage.png', align = "right")
+         p("[Photos go about here.]"),
+         h2("Project Sponsors"),
+         p("[Photos, information, and/or links about your sponsor go about here. You may want to use materials that your sponsors have already shared with you about their institution or coordinate with your stakeholders to include pertinent information here.]"),
+         h2("Acknowledgements"),
+         p("[Optional: You can also include external collaborators in this section or a separate section.]")
+       )
+     ))
     )
   
 )
@@ -544,7 +563,7 @@ body <- dashboardBody(
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 ui <- dashboardPage(
-  dashboardHeader(title = "Syscare+Recovery Shiny App"),
+  dashboardHeader(title = "Recovery Oriented Systems of Care"),
   sidebar = sidebar,
   body = body,
   skin = "black"
