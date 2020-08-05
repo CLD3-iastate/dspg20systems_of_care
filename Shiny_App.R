@@ -30,7 +30,7 @@ library(shinydashboard)
 library(mapproj)
 library(DSPG)
 library(tidyr)
-
+library(lubridate)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
@@ -574,70 +574,143 @@ server <- function(input, output){
   
   
   Meetings_AA_data <- reactive({
-    filtered_data_meetings() %>% 
+    df <- filtered_data_meetings() %>% 
       filter(type == "Alcoholics Anonymous")
     
+    if(nrow(df) == 0) {
+      df <- filtered_data_meetings()[1,]
+      df$longitude <- 0
+      df$latitude <- 0
+    }
+    df
   })
   
   
  
   
    Meetings_AAnon_data <- reactive({
-     filtered_data_meetings() %>%
+     df <- filtered_data_meetings() %>%
        filter(type == "Al-anon")
+     
+     if(nrow(df) == 0) {
+       df <- filtered_data_meetings()[1,]
+       df$longitude <- 0
+       df$latitude <- 0
+     }
+     df
    })
    
   
    Meetings_AdultChildA_data <- reactive({
-     filtered_data_meetings() %>%
+     df <- filtered_data_meetings() %>%
       filter(type == "Adult children of alcoholic")
+     
+     if(nrow(df) == 0) {
+       df <- filtered_data_meetings()[1,]
+       df$longitude <- 0
+       df$latitude <- 0
+     }
+     df
    })
   
   
    Meetings_Celebrate_data <- reactive({
-     filtered_data_meetings() %>%
+     df <- filtered_data_meetings() %>%
        filter(type == "Celebrate")
+     
+     if(nrow(df) == 0) {
+       df <- filtered_data_meetings()[1,]
+       df$longitude <- 0
+       df$latitude <- 0
+     }
+     df
    })
   
    Meetings_Crush_data <- reactive({
-     filtered_data_meetings() %>%
-      filter(type == "CRUSH")
-     
+     df <- filtered_data_meetings() %>%
+       filter(type == "CRUSH")
+     if(nrow(df) == 0) {
+       df <- filtered_data_meetings()[1,]
+       df$longitude <- 0
+       df$latitude <- 0
+     }
+     df
    })
    
     Meetings_IDRA_data <- reactive({
-      filtered_data_meetings() %>%
+      df <- filtered_data_meetings() %>%
         filter(type == "Iowa Dual Recovery Anonymous (IDRA)")
+      
+      if(nrow(df) == 0) {
+        df <- filtered_data_meetings()[1,]
+        df$longitude <- 0
+        df$latitude <- 0
+      }
+      df
     })
     
    
     Meetings_NA_data <- reactive({
-      filtered_data_meetings() %>%
+      df <- filtered_data_meetings() %>%
         filter(type == "Narcotics Anonymous")
+      
+      if(nrow(df) == 0) {
+        df <- filtered_data_meetings()[1,]
+        df$longitude <- 0
+        df$latitude <- 0
+      }
+      df
     })
    
    
     Meetings_NAnon_data <- reactive({
-      filtered_data_meetings() %>%
+      df <- filtered_data_meetings() %>%
         filter(type == "Nar-Anon")
+      
+      if(nrow(df) == 0) {
+        df <- filtered_data_meetings()[1,]
+        df$longitude <- 0
+        df$latitude <- 0
+      }
+      df
     })
    
    Meetings_PA_data <- reactive({
-     filtered_data_meetings() %>%
+     df <- filtered_data_meetings() %>%
       filter(type == "Pills Anonymous")
+     
+     if(nrow(df) == 0) {
+       df <- filtered_data_meetings()[1,]
+       df$longitude <- 0
+       df$latitude <- 0
+     }
+     df
    })
    
   
    Meetings_RR_data <- reactive({
-     filtered_data_meetings() %>%
+     df <- filtered_data_meetings() %>%
        filter(type == "Refuge Recovery")
      
+     if(nrow(df) == 0) {
+       df <- filtered_data_meetings()[1,]
+       df$longitude <- 0
+       df$latitude <- 0
+     }
+     df
   }) 
   
   
    Meetings_Smart_data <- reactive({
-     filtered_data_meetings() %>%
+     df <- filtered_data_meetings() %>%
       filter(type == "SMART")
+     
+     if(nrow(df) == 0) {
+       df <- filtered_data_meetings()[1,]
+       df$longitude <- 0
+       df$latitude <- 0
+     }
+     df
   })
 
 
@@ -1162,11 +1235,11 @@ server <- function(input, output){
                  group = "Celebrate") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon=Icon_Crush,
-                 popup=label, label = ~meeting, data = Meetings_Crush,
+                 popup=label, label = ~meeting, data = Meetings_Crush_data(),
                  group = "CRUSH") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon=Icon_IDRA,
-                 popup=label, label = ~meeting, data = Meetings_IDRA,
+                 popup=label, label = ~meeting, data = Meetings_IDRA_data(),
                  group = "Iowa Dual Recovery Anonymous (IDRA)") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon = Icon_NarAnon,
@@ -1174,15 +1247,15 @@ server <- function(input, output){
                  group = "Narcotics Anonymous") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon=Icon_NarAnon,
-                 popup=label, label = ~meeting, data= Meetings_NAnon,
+                 popup=label, label = ~meeting, data= Meetings_NAnon_data(),
                  group = "Nar-Anon") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon=Icon_PillsAnonymous,
-                 popup=label, label = ~meeting, data= Meetings_PA,
+                 popup=label, label = ~meeting, data= Meetings_PA_data(),
                  group = "Pills Anonymous") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon=Icon_Refuge,
-                 popup=label, label = ~meeting, data= Meetings_RR,
+                 popup=label, label = ~meeting, data= Meetings_RR_data(),
                  group = "Refuge Recovery") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon=Icon_Smart,
