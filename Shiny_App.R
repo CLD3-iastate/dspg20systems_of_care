@@ -2,14 +2,12 @@
 
 library(dplyr)
 library(purrr)
-library(readr)
 library(stringr)
 library(magrittr)
 library(ggplot2)
 library(shiny)
 
 library(shinythemes)
-library(shindashboard)
 library(shinydashboardPlus)
 library(plotly)
 library(leaflet)
@@ -31,6 +29,9 @@ library(shinydashboardPlus)
 library(shinydashboard)
 library(mapproj)
 library(DSPG)
+library(tidyr)
+
+
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 load("Syscare_Recovery_data.RData")
@@ -140,6 +141,9 @@ load("Syscare_Recovery_data.RData")
 
 
 #head(df2)
+#df2$county <- as.factor(df2$county)
+#df2$time <- as.factor(df2$time)
+#df2$ampm <- as.factor(df2$ampm)
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 sidebar <- dashboardSidebar(
   
@@ -401,7 +405,26 @@ body <- dashboardBody(
                   column(
                     width = 3,
                     boxPad(
-                      color = "grey" 
+                      color = "grey",
+                      
+                      # selectInput(inputId = "county_meetings", label = strong("Select a County"),
+                      #             choices = unique(df2$county),
+                      #             selected = NULL),
+                      
+                      # selectInput(inputId = "dayz", label = strong("Select a Day"),
+                      #             choices = unique(df2$day),
+                      #             selected = NULL),
+                      
+                      #selectInput(inputId = "time1", label = strong("Select a Time"),
+                                  #choices = unique(df2$time),
+                                  #selected = NULL),
+                      
+                      #selectInput(inputId = "time2", label = strong("Select Morning or Evening"),
+                                  #choices = unique(df2$ampm),
+                                  #selected = NULL),
+                      
+                      sliderInput(inputId = 'time', label = strong("Select Meeting Times"),
+                                  min = now(), max = now()+days(7), value = c(now(), now()+hours(24)))
                     )
                   ),
                   column(
@@ -532,6 +555,92 @@ ui <- dashboardPage(
 
 server <- function(input, output){
   
+  
+  #---------------------------------------------------------------------------------------------------#
+  filtered_data_meetings <- reactive({
+    
+    
+    df2 <- get_meetings(from = input$time[1], to =  input$time[2])
+    
+    df2
+    
+
+  })
+  
+  
+
+  
+  
+  
+  
+  Meetings_AA_data <- reactive({
+    filtered_data_meetings() %>% 
+      filter(type == "Alcoholics Anonymous")
+    
+  })
+  
+  
+ 
+  
+   Meetings_AAnon_data <- reactive({
+     filtered_data_meetings() %>%
+       filter(type == "Al-anon")
+   })
+   
+  
+   Meetings_AdultChildA_data <- reactive({
+     filtered_data_meetings() %>%
+      filter(type == "Adult children of alcoholic")
+   })
+  
+  
+   Meetings_Celebrate_data <- reactive({
+     filtered_data_meetings() %>%
+       filter(type == "Celebrate")
+   })
+  
+   Meetings_Crush_data <- reactive({
+     filtered_data_meetings() %>%
+      filter(type == "CRUSH")
+     
+   })
+   
+    Meetings_IDRA_data <- reactive({
+      filtered_data_meetings() %>%
+        filter(type == "Iowa Dual Recovery Anonymous (IDRA)")
+    })
+    
+   
+    Meetings_NA_data <- reactive({
+      filtered_data_meetings() %>%
+        filter(type == "Narcotics Anonymous")
+    })
+   
+   
+    Meetings_NAnon_data <- reactive({
+      filtered_data_meetings() %>%
+        filter(type == "Nar-Anon")
+    })
+   
+   Meetings_PA_data <- reactive({
+     filtered_data_meetings() %>%
+      filter(type == "Pills Anonymous")
+   })
+   
+  
+   Meetings_RR_data <- reactive({
+     filtered_data_meetings() %>%
+       filter(type == "Refuge Recovery")
+     
+  }) 
+  
+  
+   Meetings_Smart_data <- reactive({
+     filtered_data_meetings() %>%
+      filter(type == "SMART")
+  })
+
+
   
   #-----------------------------------------------------------------------------------------------------#
   
@@ -1030,38 +1139,38 @@ server <- function(input, output){
     )
     
     # Edit starting dataframe and input for lng and lat inside addCircleMarkers to change data used
-    df %>%
+    filtered_data_meetings() %>%
       leaflet() %>%
       addTiles() %>%
       addPolygons(data = st_transform(ia_counties, crs='+proj=longlat +datum=WGS84'),
                   weight = 1, color="#333333") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon = Icon_AlcAnonymous, 
-                 popup=label, label = ~meeting, data= Meetings_AA,
+                 popup=label, label = ~meeting, data= Meetings_AA_data(),
                  group = "Alcoholics Anonymous") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon=Icon_AlAnon,
-                 popup=label, label = ~meeting, data= Meetings_AAnon,
-                 group = "Al-Anon") %>%
+                 popup=label, label = ~meeting, data= Meetings_AAnon_data(),
+                 group = "Al-anon") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon = Icon_AdultChild,
-                 popup=label, label = ~meeting, data= Meetings_AdultChildA,
-                 group = "Adult children of Alcoholic") %>%
+                 popup=label, label = ~meeting, data= Meetings_AdultChildA_data(),
+                 group = "Adult children of alcoholic") %>%
       addMarkers(lng = ~longitude, lat = ~latitude, 
                  icon=Icon_Celebrate,
-                 popup=label, label = ~meeting, data= Meetings_Celebrate,
+                 popup=label, label = ~meeting, data= Meetings_Celebrate_data(),
                  group = "Celebrate") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon=Icon_Crush,
-                 popup=label, label = ~meeting, data= Meetings_Crush,
+                 popup=label, label = ~meeting, data = Meetings_Crush,
                  group = "CRUSH") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon=Icon_IDRA,
-                 popup=label, label = ~meeting, data= Meetings_IDRA,
-                 group = "IDRA") %>%
+                 popup=label, label = ~meeting, data = Meetings_IDRA,
+                 group = "Iowa Dual Recovery Anonymous (IDRA)") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon = Icon_NarAnon,
-                 popup=label, label = ~meeting, data= Meetings_NA,
+                 popup=label, label = ~meeting, data= Meetings_NA_data(),
                  group = "Narcotics Anonymous") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon=Icon_NarAnon,
@@ -1077,7 +1186,7 @@ server <- function(input, output){
                  group = "Refuge Recovery") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon=Icon_Smart,
-                 popup=label, label = ~meeting, data= Meetings_Smart,
+                 popup=label, label = ~meeting, data= Meetings_Smart_data(),
                  group = "SMART") %>%
       addLayersControl(
         overlayGroups = filter_checkbox,
@@ -1089,6 +1198,18 @@ server <- function(input, output){
       setView(lng = -93.645733, lat = 42.026234, zoom = 7)
     
   })
+  
+  
+  #mymap_proxy <- leafletProxy("change3")
+  
+  #observe({
+    #fdata <- filtered_data_meetings()
+    #mymap_proxy %>%
+      #clearMarkers() %>%
+      #addMarkers(lng = fdata$longitude, lat = fdata$latitude) %>%
+      #flyTo(lng = fdata$longitude, lat = fdata$latitude, zoom = 10)
+  #})
+  
 
  output$change4 <- renderPlotly({
    
