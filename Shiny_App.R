@@ -184,11 +184,11 @@ body <- dashboardBody(
                 collapsible = TRUE,
                 h1("2020 DSPG Project Name"),
                 h2("Project Description"),
-                p("Example text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in varius purus. Nullam ut sodales ante. Fusee justo nisi, suscipit a lacus et, posuere sagittis ex."),
+                p("Government programs often develop within agency silos, making it difficult to support ‘whole community’ responses to pressing problems. To combat this issue, the Iowa Linkageto Care Advisory Board was created to embrace cross-agency evidence-based policymaking in statewide prevention, treatment, and public safety response efforts. This project identified, webscraped, and spatially mapped publicly available data reflecting formal and informal ‘Systems of Care’ that support resilience related to mental health, physical health, education, workforce development, and child care. Interactive data tools and insights catalog and improve awareness of state resources in support of the Board’s ongoing efforts to address systemic change."),
                 h2("Project Goals"),
-                p("Example text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in varius purus. Nullam ut sodales ante. Fusee justo nisi, suscipit a lacus et, posuere sagittis ex."),
+                p("The goal of the project is to describe the services and resources, that when present in a community, provide the necessary elements to promote the successful recovery process of individuals living and engaging within that community."),
                 h2("Our Approach"),
-                p("Example text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in varius purus. Nullam ut sodales ante. Fusee justo nisi, suscipit a lacus et, posuere sagittis ex."),
+                p("This project utilized theData Analytics' Division's Data Science Framework to complete a literature review, Data Discovery Workshop, and define the formal systems of care impacting those practicing substance use recovery.  This project defined formal systems of care within the indicators of improved health, abstinence from substances, improved quality of life, social connectedness, and employment & education.  This definition allowed the project to include 17datasets in its interactive tool to visualize the formal systems of care in Iowa."),
                 h2("Ethical Considerations"),
                 p("Example text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in varius purus. Nullam ut sodales ante. Fusee justo nisi, suscipit a lacus et, posuere sagittis ex.")
               )
