@@ -152,16 +152,17 @@ sidebar <- dashboardSidebar(
     menuItem("Project Descriptions", icon = icon(" fa-file-text "), tabName = "description"),
     
     
-    menuItem("Syscare", icon = icon("leaf"),
-             menuSubItem("Work and Community Resources", tabName = "syscare_1", icon = icon("angle-right")),
-             menuSubItem("Clinical Health", tabName = "syscare_2", icon = icon("angle-right")),
-             menuSubItem("Mental Health Resources", tabName = "syscare_3", icon = icon("angle-right")),
-             menuSubItem("Substance Use Resources", tabName = "syscare_4", icon = icon("angle-right"))),
+    menuItem("Health and Wellbeing Resources", icon = icon("leaf"),
+             menuSubItem("About", tabName = "Syscare_1x", icon = icon("angle-right")),
+             menuSubItem("Substance Use", tabName = "syscare_4", icon = icon("angle-right")),  # Moved to top
+             menuSubItem("Work & Community", tabName = "syscare_1", icon = icon("angle-right")),
+             menuSubItem("Health & Wellbeing", tabName = "syscare_2", icon = icon("angle-right")),
+             menuSubItem("Mental Health", tabName = "syscare_3", icon = icon("angle-right"))),
     
-    menuItem("Recovery", icon = icon("leaf"),
+    menuItem("Recovery Resources", icon = icon("leaf"),
              menuSubItem("About", tabName = "recovery_1", icon = icon("angle-right")),
-             menuSubItem("Recovery Centers", tabName = "recovery_2", icon = icon("angle-right")),
-             menuSubItem("Recovery Meetings", tabName = "recovery_3", icon = icon("angle-right"))),
+             menuSubItem("Housing & Services Providers", tabName = "recovery_2", icon = icon("angle-right")),
+             menuSubItem("Support Group Meetings", tabName = "recovery_3", icon = icon("angle-right"))),
     
     menuItem("Acknowledgements", icon = icon("star"), tabName = "credit")
   )
@@ -193,6 +194,21 @@ body <- dashboardBody(
                 p("Example text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in varius purus. Nullam ut sodales ante. Fusee justo nisi, suscipit a lacus et, posuere sagittis ex.")
               )
             )),
+    tabItem(tabName = "Syscare_1x",
+            fluidRow(
+              boxPlus(
+                title = "Project Overview",
+                closable = FALSE,
+                width = NULL,
+                status = "warning",
+                solidHeader = TRUE,
+                collapsible = TRUE,
+                h1("About Recovery"),
+                h2("Project Description"),
+                p("Information about team members and their photos")
+                
+              )
+            )),
     
     
     tabItem(tabName = 'syscare_1',  #Panel 4#######################################################
@@ -200,12 +216,16 @@ body <- dashboardBody(
             fluidRow(
               
               box(
-                title = "Community Resources",
+                title = "Find Community Resources Near You",
                 status = "warning",
                 width = NULL,
                 fluidRow(
                   column(
                     width = 3,
+                    
+                    p("This map has locations of licensed childcare providers, churches, colleges, Iowa 211 resources, and Iowa Works offices, to show availability of more informal systems of care. 
+                        Please click on the points to see more information about each location."),
+                    
                     boxPad(
                       color = "grey"
                       
@@ -228,12 +248,17 @@ body <- dashboardBody(
             fluidRow(
               
               box(
-                title = "Medical Facility locations",
+                title = "Find Medical Facility locations",
                 status = "warning",
                 width = NULL,
                 fluidRow(
                   column(
                     width = 3,
+                    
+                    p("The first map shows various clinical health resources in Iowa, including hospitals, rural health clinics, Veterans' Affairs clinics, and medical facilities generally, which also includes facilities of specialized health care, like dentists and chiropractors. 
+                      Please click on the points to see more information about each facility."),
+                    
+                    
                     boxPad(
                       color = "grey"
                     )
@@ -255,6 +280,9 @@ body <- dashboardBody(
                 fluidRow(
                   column(
                     width = 3,
+                    
+                    p("The second map shows number of hospital beds per capita throughout the state of Iowa at the county level."),
+                    
                     boxPad(
                       color = "grey"
                     )
@@ -276,6 +304,10 @@ body <- dashboardBody(
                 fluidRow(
                   column(
                     width = 3,
+                    
+                    p("The third map shows number of hospital beds per capita, 
+                      using a logarithmic color scale to improve interpretation, along with hospital locations in the state overlayed in the dots."),
+                    
                     boxPad(
                       color = "grey"
                     )
@@ -296,12 +328,17 @@ body <- dashboardBody(
             fluidRow(
               
               box(
-                title = "Mental Health services Locations",
+                title = "Find Mental Health Services Near You ",
                 status = "warning",
                 width = NULL,
                 fluidRow(
                   column(
                     width = 3,
+                    
+                    p("Iowa is divided into 14 Mental Health and Disability Service regions. 
+                      This map shows the regional access points for those MHDS regions that have regional access points, as well as the public-facing resource directories for the Southwest Iowa MHDS region and the South Central Behavioral Health Region. 
+                      Please click on the points to see more information about each facility."),
+                    
                     boxPad(
                       color = "grey"
                       
@@ -324,12 +361,16 @@ body <- dashboardBody(
             fluidRow(
               
               box(
-                title = "Substance Abuse Management locations",
+                title = "Find Substance Use Support Near You",
                 status = "warning",
                 width = NULL,
                 fluidRow(
                   column(
                     width = 3,
+                    
+                    p("This map shows locations of drug drop off locations, MAT locations, facilities managed under Iowa's Comprehensive Substance Abuse Prevention Grant, and other substance use and problem gambling recovery locations. 
+                      Please click on the points to see more information about each facility."),
+                    
                     boxPad(
                       color = "grey"
                       
@@ -564,7 +605,7 @@ body <- dashboardBody(
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 ui <- dashboardPage(
-  dashboardHeader(title = "Recovery Oriented Systems of Care"),
+  dashboardHeader(title = "Linkage to Care"),
   sidebar = sidebar,
   body = body,
   skin = "black"
@@ -777,7 +818,7 @@ server <- function(input, output){
     
     
     
-    datasets = c("Iowa 211", "Churches", "Childcare Providers", "Colleges and Universities", "Iowa Works Offices")
+    datasets = c("Other Resources", "Churches", "Childcare Providers", "Colleges and Universities", "Iowa Works Offices")
     colors <- RColorBrewer::brewer.pal(n = length(datasets), name="Dark2")
     
     pal <- colorFactor(
@@ -818,7 +859,13 @@ server <- function(input, output){
       ) %>%
       addLegend(
         position = c("bottomleft"), pal = pal, values = datasets, opacity = 0.9
-      ) %>%
+      ) %>% 
+      addEasyButton(easyButton(
+        icon="fa-globe", title="Zoom to Level 1",
+        onClick=JS("function(btn, map){ map.setZoom(1); }"))) %>%
+      addEasyButton(easyButton(
+        icon="fa-crosshairs", title="Locate Me",
+        onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
       setView(lng = -93.645733, lat = 42.026234, zoom = 7)
     
   })
@@ -866,7 +913,7 @@ server <- function(input, output){
     
     
     
-    datasets = c("Rural Health Clinics", "Iowa Hospitals", "VA Clinics", "Medical Facilities")
+    datasets = c("Rural Health Clinics", "Iowa Hospitals", "VA Hospitals/Clinics", "Medical Facilities") #Remove Medical Facilities
     colors <- RColorBrewer::brewer.pal(n = length(datasets), name="Dark2")
     
     pal <- colorFactor(
@@ -904,6 +951,12 @@ server <- function(input, output){
       addLegend(
         position = c("bottomleft"), pal = pal, values = datasets, opacity = 0.9
       ) %>%
+      addEasyButton(easyButton(
+        icon="fa-globe", title="Zoom to Level 1",
+        onClick=JS("function(btn, map){ map.setZoom(1); }"))) %>%
+      addEasyButton(easyButton(
+        icon="fa-crosshairs", title="Locate Me",
+        onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
       setView(lng = -93.645733, lat = 42.026234, zoom = 7)
     
 
@@ -1023,6 +1076,12 @@ server <- function(input, output){
       addLegend(
         position = c("bottomleft"), pal = pal, values = datasets, opacity = 0.9
       ) %>%
+      addEasyButton(easyButton(
+        icon="fa-globe", title="Zoom to Level 1",
+        onClick=JS("function(btn, map){ map.setZoom(1); }"))) %>%
+      addEasyButton(easyButton(
+        icon="fa-crosshairs", title="Locate Me",
+        onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
       setView(lng = -93.645733, lat = 42.026234, zoom = 7)
  
   })
@@ -1067,7 +1126,7 @@ server <- function(input, output){
     
     
     
-    datasets = c("Drug Drop Off Sites", "Medicated Assisted Treatment (MAT) Locations", "Regional Substance Use Treatment Facilities", "Substance Use/Problem Gambling Recovery")
+    datasets = c("Drug Drop Off Sites", "Medication Assisted Treatment (MAT) Locations", "Regional Substance Use Treatment Facilities", "Substance Use/Problem Gambling Recovery")
     colors <- RColorBrewer::brewer.pal(n = length(datasets), name="Dark2")
     
     pal <- colorFactor(
@@ -1105,6 +1164,12 @@ server <- function(input, output){
       addLegend(
         position = c("bottomleft"), pal = pal, values = datasets, opacity = 0.9
       ) %>%
+      addEasyButton(easyButton(
+        icon="fa-globe", title="Zoom to Level 1",
+        onClick=JS("function(btn, map){ map.setZoom(1); }"))) %>%
+      addEasyButton(easyButton(
+        icon="fa-crosshairs", title="Locate Me",
+        onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
       setView(lng = -93.645733, lat = 42.026234, zoom = 7)
     
     
@@ -1159,6 +1224,12 @@ server <- function(input, output){
       addLegend(
         position = c("bottomright"), pal = pal, values = filter_checkbox
       ) %>%
+      addEasyButton(easyButton(
+        icon="fa-globe", title="Zoom to Level 1",
+        onClick=JS("function(btn, map){ map.setZoom(1); }"))) %>%
+      addEasyButton(easyButton(
+        icon="fa-crosshairs", title="Locate Me",
+        onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
       setView(lng = -93.645733, lat = 42.026234, zoom = 7)
     
     
@@ -1283,11 +1354,17 @@ server <- function(input, output){
                  group = "SMART") %>%
       addLayersControl(
         overlayGroups = filter_checkbox,
-        options = layersControlOptions(collapsed = TRUE)
+        options = layersControlOptions(collapsed = FALSE)
       ) %>%
       addLegend(
         position = c("bottomright"), pal = pal, values = filter_checkbox
       ) %>%
+      addEasyButton(easyButton(
+        icon="fa-globe", title="Zoom to Level 1",
+        onClick=JS("function(btn, map){ map.setZoom(1); }"))) %>%
+      addEasyButton(easyButton(
+        icon="fa-crosshairs", title="Locate Me",
+        onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
       setView(lng = -93.645733, lat = 42.026234, zoom = 7)
     
   })
