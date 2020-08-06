@@ -205,13 +205,22 @@ body <- dashboardBody(
                 collapsible = TRUE,
                 h1("Team Members"),
             #    h2("Project Description"),
-            img(src='kishor_kumar_sridhar.jpg', width="150px", height="200px"), 
-            img(src='andrew_maloney.jpg', width="150px", height="200px"), 
-            img(src='joel_vb.jpg', width="150px", height="200px"), 
-            img(src='matthew_voss.jpg', width="150px", height="200px"), 
-            img(src='heike.jpg', width="150px", height="200px"), 
-                p("Information about team members and their photos")
-              )
+            box(width=3, 
+                img(src='kishor_kumar_sridhar.jpg', width="150px", height="200px"), 
+                p("Kishor Kumar Sridhar, DSPG Summer Fellow, Information Systems")),
+            box(width=3, 
+                img(src='andrew_maloney.jpg', width="150px", height="200px"), 
+                p("Andrew Maloney, DSPG Summer Intern, Data Science")),
+            box(width=3, 
+                img(src='joel_vb.jpg', width="150px", height="200px"), 
+                p("Joel Von Behren, DSPG Summer Intern, Data Science")),
+            box(width=3, 
+                img(src='matthew_voss.jpg', width="150px", height="200px"), 
+                p("Matthew Voss, DSPG Summer Intern, Statistics, Computer Science, Math")),
+            box(width=3, 
+                img(src='heike.jpg', width="150px", height="200px"), 
+                p("Heike Hofmann, Professor of Statistics and Interim Professor in Charge of the Data Science Program"))
+               )
             )),
     
     
@@ -403,13 +412,21 @@ body <- dashboardBody(
                 collapsible = TRUE,
                 h1("Team Members"),
             #    h2("Project Description"),
-            img(src='atefeh_rajabalizadeh.jpg', width="150px", height="200px"), 
-            img(src='jessie_bustin.jpg', width="150px", height="200px"), 
-            img(src='grant_durbahn.jpg', width="150px", height="200px"), 
-            img(src='vikram_magal.jpg', width="150px", height="200px"), 
-            img(src='second_photo_for_shawn_0.jpg', width="150px", height="200px"), 
-                p("Information about team members and their photos")
-
+            box(width=3, 
+                img(src='atefeh_rajabalizadeh.jpg', width="150px", height="200px"), 
+                p("Atefeh Rajabalizadeh, DSPG Summer Fellow, Industrial Engineering")),
+            box(width=3, 
+                img(src='jessie_bustin.jpg', width="150px", height="200px"), 
+                p("Jessie Bustin, DSPG Summer Intern, Data Science and Statistics")),
+            box(width=3, 
+                img(src='grant_durbahn.jpg', width="150px", height="200px"),
+                p("Grant Durbahn, DSPG Summer Intern, Economics and Math")),
+            box(width=3, 
+                img(src='vikram_magal.jpg', width="150px", height="200px"), 
+                p("Vikram Magal, DSPG Summer Intern, Business Analytics and Management Information Systems")),
+            box(width=3, 
+                img(src='second_photo_for_shawn_0.jpg', width="150px", height="200px"),                 
+                p("Shawn Dorius, Associate Professor of Sociology, Demography and Community Sociology"))
               )
             )),
     
