@@ -532,7 +532,8 @@ body <- dashboardBody(
          solidHeader = TRUE,
          collapsible = TRUE,
          h2("Recovery & Systems of Care Team Members"),
-         img(src='myImage.png', align = "left"), img(src='myImage.png', align = "middle"), img(src='myImage.png', align = "right")
+         img(src='img/shawn.png', align = "left"), 
+         img(src='img/cass.png', align = "middle"), 
          p("[Photos go about here.]"),
          h2("Project Sponsors"),
          p("[Photos, information, and/or links about your sponsor go about here. You may want to use materials that your sponsors have already shared with you about their institution or coordinate with your stakeholders to include pertinent information here.]"),
