@@ -156,7 +156,7 @@ sidebar <- dashboardSidebar(
              menuSubItem("About", tabName = "Syscare_1x", icon = icon("angle-right")),
              menuSubItem("Substance Use", tabName = "syscare_4", icon = icon("angle-right")),  # Moved to top
              menuSubItem("Work & Community", tabName = "syscare_1", icon = icon("angle-right")),
-             menuSubItem("Health & Wellbeing", tabName = "syscare_2", icon = icon("angle-right")),
+ #            menuSubItem("Health & Wellbeing", tabName = "syscare_2", icon = icon("angle-right")),
              menuSubItem("Mental Health", tabName = "syscare_3", icon = icon("angle-right"))),
     
     menuItem("Recovery Resources", icon = icon("leaf"),
@@ -1262,7 +1262,7 @@ server <- function(input, output){
   
   output$change3 <- renderLeaflet({
     
-    filter_checkbox <- c("Alcoholics Anonymous", "Adult children of Alcoholic", "Celebrate", "CRUSH", "IDRA", "Narcotics Anonymous", "Pills Anonymous", "Refuge Recovery", "SMART")
+    filter_checkbox <- c("Alcoholics Anonymous", "Al-anon", "Adult children of Alcoholic", "Celebrate", "CRUSH", "IDRA", "Narcotics Anonymous","Nar-anon", "Pills Anonymous", "Refuge Recovery", "SMART")
     
     # Color palette
     colors <- RColorBrewer::brewer.pal(n = length(filter_checkbox), name="Spectral")
@@ -1382,7 +1382,7 @@ server <- function(input, output){
         options = layersControlOptions(collapsed = FALSE)
       ) %>%
       addLegend(
-        position = c("bottomright"), pal = pal, values = filter_checkbox
+        position = c("bottomleft"), pal = pal, values = filter_checkbox
       ) %>%
       addEasyButton(easyButton(
         icon="fa-globe", title="Zoom to Level 7",
