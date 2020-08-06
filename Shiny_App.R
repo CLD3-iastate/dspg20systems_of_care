@@ -598,13 +598,13 @@ body <- dashboardBody(
          status = "warning",
          solidHeader = TRUE,
          collapsible = TRUE,
-         h2("Recovery & Systems of Care Team Members"),
+         h2("Project Sponsors"),
+         p("Substance Abuse Bureau, Iowa Department of Public Health. Monica Wilke-Brown, Kevin Gabbard"),
+         h2("Faculty Lead"),
          img(src='second_photo_for_shawn_0.jpg', width="150px", height="200px"), 
          img(src='cass_dorius_0.jpg', width="150px", height="200px"), 
-         h2("Project Sponsors"),
-         p("[Photos, information, and/or links about your sponsor go about here. You may want to use materials that your sponsors have already shared with you about their institution or coordinate with your stakeholders to include pertinent information here.]"),
-         h2("Acknowledgements"),
-         p("[Optional: You can also include external collaborators in this section or a separate section.]")
+#         h2("Acknowledgements"),
+#         p("[Optional: You can also include external collaborators in this section or a separate section.]")
        )
      ))
     )
