@@ -602,7 +602,7 @@ body <- dashboardBody(
          p("Substance Abuse Bureau, Iowa Department of Public Health. Monica Wilke-Brown, Kevin Gabbard"),
          h2("Faculty Lead"),
          img(src='second_photo_for_shawn_0.jpg', width="150px", height="200px"), 
-         img(src='cass_dorius_0.jpg', width="150px", height="200px"), 
+         img(src='cass_dorius_0.jpg', width="150px", height="200px")
 #         h2("Acknowledgements"),
 #         p("[Optional: You can also include external collaborators in this section or a separate section.]")
        )
@@ -886,11 +886,11 @@ server <- function(input, output){
         position = c("bottomleft"), pal = pal, values = datasets, opacity = 0.9
       ) %>% 
       addEasyButton(easyButton(
-        icon="fa-globe", title="Zoom to Level 1",
-        onClick=JS("function(btn, map){ map.setZoom(1); }"))) %>%
+        icon="fa-globe", title="Zoom to Level 7",
+        onClick=JS("function(btn, map){ map.setZoom(7); }"))) %>%
       addEasyButton(easyButton(
         icon="fa-crosshairs", title="Locate Me",
-        onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
+        onClick=JS("function(btn, map){ map.locate({setView: true, zoom: 10}); }"))) %>%
       setView(lng = -93.645733, lat = 42.026234, zoom = 7)
     
   })
@@ -977,11 +977,11 @@ server <- function(input, output){
         position = c("bottomleft"), pal = pal, values = datasets, opacity = 0.9
       ) %>%
       addEasyButton(easyButton(
-        icon="fa-globe", title="Zoom to Level 1",
-        onClick=JS("function(btn, map){ map.setZoom(1); }"))) %>%
+        icon="fa-globe", title="Zoom to Level 7",
+        onClick=JS("function(btn, map){ map.setZoom(7); }"))) %>%
       addEasyButton(easyButton(
         icon="fa-crosshairs", title="Locate Me",
-        onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
+        onClick=JS("function(btn, map){ map.locate({setView: true, zoom: 10}); }"))) %>%
       setView(lng = -93.645733, lat = 42.026234, zoom = 7)
     
 
@@ -1102,11 +1102,11 @@ server <- function(input, output){
         position = c("bottomleft"), pal = pal, values = datasets, opacity = 0.9
       ) %>%
       addEasyButton(easyButton(
-        icon="fa-globe", title="Zoom to Level 1",
-        onClick=JS("function(btn, map){ map.setZoom(1); }"))) %>%
+        icon="fa-globe", title="Zoom to Level 7",
+        onClick=JS("function(btn, map){ map.setZoom(7); }"))) %>%
       addEasyButton(easyButton(
         icon="fa-crosshairs", title="Locate Me",
-        onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
+        onClick=JS("function(btn, map){ map.locate({setView: true, zoom: 10}); }"))) %>%
       setView(lng = -93.645733, lat = 42.026234, zoom = 7)
  
   })
@@ -1190,11 +1190,11 @@ server <- function(input, output){
         position = c("bottomleft"), pal = pal, values = datasets, opacity = 0.9
       ) %>%
       addEasyButton(easyButton(
-        icon="fa-globe", title="Zoom to Level 1",
-        onClick=JS("function(btn, map){ map.setZoom(1); }"))) %>%
+        icon="fa-globe", title="Zoom to Level 7",
+        onClick=JS("function(btn, map){ map.setZoom(7); }"))) %>%
       addEasyButton(easyButton(
         icon="fa-crosshairs", title="Locate Me",
-        onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
+        onClick=JS("function(btn, map){ map.locate({setView: true, zoom: 10}); }"))) %>%
       setView(lng = -93.645733, lat = 42.026234, zoom = 7)
     
     
@@ -1250,11 +1250,11 @@ server <- function(input, output){
         position = c("bottomright"), pal = pal, values = filter_checkbox
       ) %>%
       addEasyButton(easyButton(
-        icon="fa-globe", title="Zoom to Level 1",
-        onClick=JS("function(btn, map){ map.setZoom(1); }"))) %>%
+        icon="fa-globe", title="Zoom to Level 7",
+        onClick=JS("function(btn, map){ map.setZoom(7); }"))) %>%
       addEasyButton(easyButton(
         icon="fa-crosshairs", title="Locate Me",
-        onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
+        onClick=JS("function(btn, map){ map.locate({setView: true, zoom: 10}); }"))) %>%
       setView(lng = -93.645733, lat = 42.026234, zoom = 7)
     
     
@@ -1385,11 +1385,11 @@ server <- function(input, output){
         position = c("bottomright"), pal = pal, values = filter_checkbox
       ) %>%
       addEasyButton(easyButton(
-        icon="fa-globe", title="Zoom to Level 1",
-        onClick=JS("function(btn, map){ map.setZoom(1); }"))) %>%
+        icon="fa-globe", title="Zoom to Level 7",
+        onClick=JS("function(btn, map){ map.setZoom(7); }"))) %>%
       addEasyButton(easyButton(
         icon="fa-crosshairs", title="Locate Me",
-        onClick=JS("function(btn, map){ map.locate({setView: true}); }"))) %>%
+        onClick=JS("function(btn, map){ map.locate({setView: true, zoom: 10}); }"))) %>%
       setView(lng = -93.645733, lat = 42.026234, zoom = 7)
     
   })
