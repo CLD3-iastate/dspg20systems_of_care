@@ -149,7 +149,7 @@ sidebar <- dashboardSidebar(
   
   sidebarMenu(
     
-    menuItem("Project Descriptions", icon = icon(" fa-file-text "), tabName = "description"),
+    menuItem("Project Description", icon = icon(" fa-file-text "), tabName = "description"),
     
     
     menuItem("Health and Wellbeing Resources", icon = icon("leaf"),
@@ -183,13 +183,13 @@ body <- dashboardBody(
                 status = "warning",
                 solidHeader = TRUE,
                 collapsible = TRUE,
-                h1("2020 DSPG Project Name"),
+                h1("2020 DSPG Linkage to Care"),
                 h2("Project Description"),
-                p("Government programs often develop within agency silos, making it difficult to support ‘whole community’ responses to pressing problems. To combat this issue, the Iowa Linkageto Care Advisory Board was created to embrace cross-agency evidence-based policymaking in statewide prevention, treatment, and public safety response efforts. This project identified, webscraped, and spatially mapped publicly available data reflecting formal and informal ‘Systems of Care’ that support resilience related to mental health, physical health, education, workforce development, and child care. Interactive data tools and insights catalog and improve awareness of state resources in support of the Board’s ongoing efforts to address systemic change."),
+                p("Government programs often develop within agency silos, making it difficult to support ‘whole community’ responses to pressing problems. To combat this issue, the Iowa Linkage to Care Advisory Board was created to embrace cross-agency evidence-based policymaking in statewide prevention, treatment, and public safety response efforts. This project identified, webscraped, and spatially mapped publicly available data reflecting formal and informal ‘Systems of Care’ that support resilience related to mental health, physical health, education, workforce development, and child care. Interactive data tools and insights catalog and improve awareness of state resources in support of the Board’s ongoing efforts to address systemic change."),
                 h2("Project Goals"),
                 p("The goal of the project is to describe the services and resources, that when present in a community, provide the necessary elements to promote the successful recovery process of individuals living and engaging within that community."),
                 h2("Our Approach"),
-                p("This project utilized theData Analytics' Division's Data Science Framework to complete a literature review, Data Discovery Workshop, and define the formal systems of care impacting those practicing substance use recovery.  This project defined formal systems of care within the indicators of improved health, abstinence from substances, improved quality of life, social connectedness, and employment & education.  This definition allowed the project to include 17datasets in its interactive tool to visualize the formal systems of care in Iowa."),
+                p("This project utilized the Data Analytics' Division's Data Science Framework to complete a literature review, Data Discovery Workshop, and define the formal systems of care impacting those practicing substance use recovery.  This project defined formal systems of care within the indicators of improved health, abstinence from substances, improved quality of life, social connectedness, and employment & education.  This definition allowed the project to include 17datasets in its interactive tool to visualize the formal systems of care in Iowa."),
                 h2("Ethical Considerations"),
                 p("Example text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in varius purus. Nullam ut sodales ante. Fusee justo nisi, suscipit a lacus et, posuere sagittis ex.")
               )
@@ -197,16 +197,20 @@ body <- dashboardBody(
     tabItem(tabName = "Syscare_1x",
             fluidRow(
               boxPlus(
-                title = "Project Overview",
+                title = "The Syscare Team",
                 closable = FALSE,
                 width = NULL,
                 status = "warning",
                 solidHeader = TRUE,
                 collapsible = TRUE,
-                h1("About Recovery"),
-                h2("Project Description"),
+                h1("Team Members"),
+            #    h2("Project Description"),
+            img(src='kishor_kumar_sridhar.jpg', width="150px", height="200px"), 
+            img(src='andrew_maloney.jpg', width="150px", height="200px"), 
+            img(src='joel_vb.jpg', width="150px", height="200px"), 
+            img(src='matthew_voss.jpg', width="150px", height="200px"), 
+            img(src='heike.jpg', width="150px", height="200px"), 
                 p("Information about team members and their photos")
-                
               )
             )),
     
@@ -391,14 +395,19 @@ body <- dashboardBody(
     tabItem(tabName = "recovery_1",
             fluidRow(
               boxPlus(
-                title = "Project Overview",
+                title = "The Recovery Team",
                 closable = FALSE,
                 width = NULL,
                 status = "warning",
                 solidHeader = TRUE,
                 collapsible = TRUE,
-                h1("About Recovery"),
-                h2("Project Description"),
+                h1("Team Members"),
+            #    h2("Project Description"),
+            img(src='atefeh_rajabalizadeh.jpg', width="150px", height="200px"), 
+            img(src='jessie_bustin.jpg', width="150px", height="200px"), 
+            img(src='grant_durbahn.jpg', width="150px", height="200px"), 
+            img(src='vikram_magal.jpg', width="150px", height="200px"), 
+            img(src='second_photo_for_shawn_0.jpg', width="150px", height="200px"), 
                 p("Information about team members and their photos")
 
               )
@@ -573,9 +582,8 @@ body <- dashboardBody(
          solidHeader = TRUE,
          collapsible = TRUE,
          h2("Recovery & Systems of Care Team Members"),
-         img(src='img/shawn.png', align = "left"), 
-         img(src='img/cass.png', align = "middle"), 
-         p("[Photos go about here.]"),
+         img(src='second_photo_for_shawn_0.jpg', width="150px", height="200px"), 
+         img(src='cass_dorius_0.jpg', width="150px", height="200px"), 
          h2("Project Sponsors"),
          p("[Photos, information, and/or links about your sponsor go about here. You may want to use materials that your sponsors have already shared with you about their institution or coordinate with your stakeholders to include pertinent information here.]"),
          h2("Acknowledgements"),
