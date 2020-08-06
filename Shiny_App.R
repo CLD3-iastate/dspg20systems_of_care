@@ -191,7 +191,7 @@ body <- dashboardBody(
                 h2("Our Approach"),
                 p("This project utilized the Data Analytics' Division's Data Science Framework to complete a literature review, Data Discovery Workshop, and define the formal systems of care impacting those practicing substance use recovery.  This project defined formal systems of care within the indicators of improved health, abstinence from substances, improved quality of life, social connectedness, and employment & education.  This definition allowed the project to include 17datasets in its interactive tool to visualize the formal systems of care in Iowa."),
                 h2("Ethical Considerations"),
-                p("Example text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in varius purus. Nullam ut sodales ante. Fusee justo nisi, suscipit a lacus et, posuere sagittis ex.")
+                p("We are trying to be very cognizant of the concerns and privacy of vulnerable populations.")
               )
             )),
     tabItem(tabName = "Syscare_1x",
