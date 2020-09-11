@@ -9,6 +9,7 @@ library(shiny)
 
 library(shinythemes)
 library(shinydashboardPlus)
+library(shinyjs)
 library(plotly)
 library(leaflet)
 library(sf)
@@ -144,12 +145,43 @@ load("Syscare_Recovery_data.RData")
 #df2$county <- as.factor(df2$county)
 #df2$time <- as.factor(df2$time)
 #df2$ampm <- as.factor(df2$ampm)
+
+
+
+# JavaScript code for changing graphic
+jscode <- "var referer = document.referrer;
+
+           var n = referer.includes('economic');
+
+           var x = document.getElementsByClassName('logo');
+
+           if (n != true) {
+
+             x[0].innerHTML = '<a href=\"https://datascienceforthepublicgood.org/events/symposium2020/poster-sessions\">' +
+
+                              '<img src=\"DSPG_black-01.png\", alt=\"DSPG 2020 Symposium Proceedings\", style=\"height:42px;\">' +
+
+                             '</a>';
+
+           } else {
+
+             x[0].innerHTML = '<a href=\"https://datascienceforthepublicgood.org/economic-mobility/community-insights\">' +
+
+                              '<img src=\"AEMLogoGatesColorsBlack-11.png\", alt=\"Gates Economic Mobility Case Studies\", style=\"height:42px;\">' +
+
+                              '</a>';
+
+           }
+           
+
+           "
+
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 sidebar <- dashboardSidebar(
   
   sidebarMenu(
     
-    menuItem("Project Description", icon = icon(" fa-file-text "), tabName = "description"),
+    menuItem("Project Overview", icon = icon(" fa-file-text "), tabName = "description"),
     
     
     menuItem("Health and Wellbeing Resources", icon = icon("leaf"),
@@ -172,6 +204,7 @@ sidebar <- dashboardSidebar(
 #------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 body <- dashboardBody(
+  useShinyjs(),
   tabItems(
     
     tabItem(tabName = "description",
@@ -630,17 +663,19 @@ body <- dashboardBody(
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 ui <- dashboardPage(
-  dashboardHeader(title = "Linkage to Care"),
+  #dashboardHeader(title = "Linkage to Care"),
+  header = dashboardHeaderPlus(left_menu = tagList(div("Linkage to Care", style="height:35px; display:flex; align-items: center;"))),
   sidebar = sidebar,
   body = body,
   skin = "black"
 )
+left_menu = tagList(div("Project to Verify Something Something Using Something Else plus Something...", style="height:35px; display:flex; align-items: center;"))
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 
-server <- function(input, output){
-  
+server <- function(input, output, session){
+  runjs(jscode)
   
   #---------------------------------------------------------------------------------------------------#
   filtered_data_meetings <- reactive({
