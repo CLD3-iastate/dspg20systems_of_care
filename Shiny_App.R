@@ -500,7 +500,7 @@ body <- dashboardBody(
             fluidRow(
               
               box(
-                title = "Recovery meeting data",
+                title = "Find A Recovery Meeting Near You",
                 status = "warning",
                 width = NULL,
                 fluidRow(
@@ -540,7 +540,7 @@ body <- dashboardBody(
             fluidRow(
               
               box(
-                title = "Recovery meeting data",
+                title = "Recovery Meeting Data Analysis",
                 status = "warning",
                 width = NULL,
                 fluidRow(
@@ -561,7 +561,7 @@ body <- dashboardBody(
             fluidRow(
               
               box(
-                title = "Recovery meeting data",
+                title = "Recovery Meeting Data Analysis",
                 status = "warning",
                 width = NULL,
                 fluidRow(
@@ -582,7 +582,7 @@ body <- dashboardBody(
             fluidRow(
               
               box(
-                title = "Recovery meeting data",
+                title = "Recovery Meeting Data Analysis",
                 status = "warning",
                 width = NULL,
                 fluidRow(
@@ -603,7 +603,7 @@ body <- dashboardBody(
             fluidRow(
               
               box(
-                title = "Recovery meeting data",
+                title = "Recovery Meeting Data Analysis",
                 status = "warning",
                 width = NULL,
                 fluidRow(
@@ -1294,115 +1294,147 @@ server <- function(input, output, session){
     # Color palette
     colors <- RColorBrewer::brewer.pal(n = length(filter_checkbox), name="Spectral")
     
-    meetingtime <- paste(sep = " ",
-                         df$day,
-                         df$time,
-                         df$ampm)
-    
-    label <- paste(sep="<br>",
-                   df$meeting,
-                   df$address,
-                   meetingtime)
-    
     pal <- colorFactor(
       palette = colors,
       levels = filter_checkbox)
     
-    # Create icons
+    # Create icons and datasets
     Icon_AdultChild <- makeIcon(
       iconUrl = "stuff/Icons/Icon_AdultChildren.png",
       iconWidth = 10, iconHeight = 10
     )
+    meetings_AdultChild = Meetings_AdultChildA_data()
+    
     Icon_AlcAnonymous <- makeIcon(
       iconUrl = "stuff/Icons/Icon_AlcAnonymous.png",
       iconWidth = 10, iconHeight = 10
     )
+    meetings_AlcAnonymous = Meetings_AA_data()
+    
     Icon_AlAnon <- makeIcon(
       iconUrl = "stuff/Icons/Icon_AlAnon.png",
       iconWidth = 10, iconHeight = 10
     )
+    meetings_AlAnon = Meetings_AAnon_data()
+    
     Icon_Celebrate <- makeIcon(
       iconUrl = "stuff/Icons/Icon_Celebrate.png",
       iconWidth = 10, iconHeight = 10
     )
+    meetings_Celebrate = Meetings_Celebrate_data()
+    
     Icon_Crush <- makeIcon(
       iconUrl = "stuff/Icons/Icon_Crush.png",
       iconWidth = 10, iconHeight = 10
     )
+    meetings_Crush = Meetings_Crush_data()
+    
     Icon_IDRA <- makeIcon(
       iconUrl = "stuff/Icons/Icon_IDRA.png",
       iconWidth = 10, iconHeight = 10
     )
+    meetings_IDRA = Meetings_IDRA_data()
+    
     Icon_NarAnon <- makeIcon(
       iconUrl = "stuff/Icons/Icon_NarAnon.png",
       iconWidth = 10, iconHeight = 10
     )
+    meetings_NarAnon = Meetings_NAnon_data()
+    
     Icon_NarcAnonymous <- makeIcon(
       iconUrl = "stuff/Icons/Icon_NarcoticsAnonymous.png",
       iconWidth = 10, iconHeight = 10
     )
+    meetings_NarcAnonymous = Meetings_NA_data()
+    
     Icon_PillsAnonymous <- makeIcon(
       iconUrl = "stuff/Icons/Icon_PillsAnonymous.png",
       iconWidth = 10, iconHeight = 10
     )
+    meetings_PillsAnonymous = Meetings_PA_data()
+    
     Icon_Refuge <- makeIcon(
       iconUrl = "stuff/Icons/Icon_Refuge.png",
       iconWidth = 10, iconHeight = 10
     )
+    meetings_Refuge = Meetings_RR_data()
+    
     Icon_Smart <- makeIcon(
       iconUrl = "stuff/Icons/Icon_Smart.png",
       iconWidth = 10, iconHeight = 10
     )
+    meetings_Smart = Meetings_Smart_data()
     
     # Edit starting dataframe and input for lng and lat inside addCircleMarkers to change data used
-    filtered_data_meetings() %>%
       leaflet() %>%
       addTiles() %>%
       addPolygons(data = st_transform(ia_counties, crs='+proj=longlat +datum=WGS84'),
                   weight = 1, color="#333333") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon = Icon_AlcAnonymous, 
-                 popup= label, label = ~meeting, data= Meetings_AA_data(),
+                 popup= paste(sep = "<br>", meetings_AlcAnonymous$meeting, meetings_AlcAnonymous$address, 
+                              paste(sep = " ", meetings_AlcAnonymous$day, meetings_AlcAnonymous$time, meetings_AlcAnonymous$ampm)), 
+                 label = ~meeting, data= meetings_AlcAnonymous,
                  group = "Alcoholics Anonymous") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon=Icon_AlAnon,
-                 popup=label, label = ~meeting, data= Meetings_AAnon_data(),
+                 popup= paste(sep = "<br>", meetings_AlAnon$meeting, meetings_AlAnon$address, 
+                              paste(sep = " ", meetings_AlAnon$day, meetings_AlAnon$time, meetings_AlAnon$ampm)), 
+                 label = ~meeting, data= meetings_AlAnon,
                  group = "Al-anon") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon = Icon_AdultChild,
-                 popup=label, label = ~meeting, data= Meetings_AdultChildA_data(),
+                 popup= paste(sep = "<br>", meetings_AdultChild$meeting, meetings_AdultChild$address, 
+                              paste(sep = " ", meetings_AdultChild$day, meetings_AdultChild$time, meetings_AdultChild$ampm)), 
+                 label = ~meeting, data= meetings_AdultChild,
                  group = "Adult children of alcoholic") %>%
       addMarkers(lng = ~longitude, lat = ~latitude, 
                  icon=Icon_Celebrate,
-                 popup=label, label = ~meeting, data= Meetings_Celebrate_data(),
+                 popup= paste(sep = "<br>", meetings_Celebrate$meeting, meetings_Celebrate$address, 
+                              paste(sep = " ", meetings_Celebrate$day, meetings_Celebrate$time, meetings_Celebrate$ampm)), 
+                 label = ~meeting, data= meetings_Celebrate,
                  group = "Celebrate") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon=Icon_Crush,
-                 popup=label, label = ~meeting, data = Meetings_Crush_data(),
+                 popup= paste(sep = "<br>", meetings_Crush$meeting, meetings_Crush$address, 
+                              paste(sep = " ", meetings_Crush$day, meetings_Crush$time, meetings_Crush$ampm)), 
+                 label = ~meeting, data= meetings_Crush,
                  group = "CRUSH") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon=Icon_IDRA,
-                 popup=label, label = ~meeting, data = Meetings_IDRA_data(),
+                 popup= paste(sep = "<br>", meetings_IDRA$meeting, meetings_IDRA$address, 
+                              paste(sep = " ", meetings_IDRA$day, meetings_IDRA$time, meetings_IDRA$ampm)), 
+                 label = ~meeting, data= meetings_IDRA,
                  group = "Iowa Dual Recovery Anonymous (IDRA)") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
-                 icon = Icon_NarAnon,
-                 popup=label, label = ~meeting, data= Meetings_NA_data(),
+                 icon = Icon_NarcAnonymous,
+                 popup= paste(sep = "<br>", meetings_NarcAnonymous$meeting, meetings_NarcAnonymous$address, 
+                              paste(sep = " ", meetings_NarcAnonymous$day, meetings_NarcAnonymous$time, meetings_NarcAnonymous$ampm)), 
+                 label = ~meeting, data= meetings_NarcAnonymous,
                  group = "Narcotics Anonymous") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon=Icon_NarAnon,
-                 popup=label, label = ~meeting, data= Meetings_NAnon_data(),
+                 popup= paste(sep = "<br>", meetings_NarAnon$meeting, meetings_NarAnon$address, 
+                              paste(sep = " ", meetings_NarAnon$day, meetings_NarAnon$time, meetings_NarAnon$ampm)), 
+                 label = ~meeting, data= meetings_NarAnon,
                  group = "Nar-Anon") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon=Icon_PillsAnonymous,
-                 popup=label, label = ~meeting, data= Meetings_PA_data(),
+                 popup= paste(sep = "<br>", meetings_PillsAnonymous$meeting, meetings_PillsAnonymous$address, 
+                              paste(sep = " ", meetings_PillsAnonymous$day, meetings_PillsAnonymous$time, meetings_PillsAnonymous$ampm)), 
+                 label = ~meeting, data= meetings_PillsAnonymous,
                  group = "Pills Anonymous") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon=Icon_Refuge,
-                 popup=label, label = ~meeting, data= Meetings_RR_data(),
+                 popup= paste(sep = "<br>", meetings_Refuge$meeting, meetings_Refuge$address, 
+                              paste(sep = " ", meetings_Refuge$day, meetings_Refuge$time, meetings_Refuge$ampm)), 
+                 label = ~meeting, data= meetings_Refuge,
                  group = "Refuge Recovery") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon=Icon_Smart,
-                 popup=label, label = ~meeting, data= Meetings_Smart_data(),
+                 popup= paste(sep = "<br>", meetings_Smart$meeting, meetings_Smart$address, 
+                              paste(sep = " ", meetings_Smart$day, meetings_Smart$time, meetings_Smart$ampm)), 
+                 label = ~meeting, data= meetings_Smart,
                  group = "SMART") %>%
       addLayersControl(
         overlayGroups = filter_checkbox,
