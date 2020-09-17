@@ -269,7 +269,7 @@ body <- dashboardBody(
                   column(
                     width = 3,
                     
-                    p("This map has locations of licensed childcare providers, churches, colleges, Iowa 211 resources, and Iowa Works offices, to show availability of more informal systems of care. 
+                    p("This map has locations of licensed childcare providers, colleges, and Iowa Works offices, to show availability of more informal systems of care. 
                         Please click on the points to see more information about each location."),
                     
                     boxPad(
@@ -470,12 +470,14 @@ body <- dashboardBody(
             fluidRow(
               
               box(
-                title = "Recovery data",
+                title = "Find Recovery Resources Near You",
                 status = "warning",
                 width = NULL,
                 fluidRow(
                   column(
                     width = 3,
+                    p("This map shows the locations of substance use housing providers as well as information on inpatient and 
+                      outpatient service providers in Iowa. Please click on the points to see more information about each facility."),
                     boxPad(
                       color = "grey"
                       
@@ -633,9 +635,10 @@ body <- dashboardBody(
          collapsible = TRUE,
          h2("Project Sponsors"),
          p("Substance Abuse Bureau, Iowa Department of Public Health. Monica Wilke-Brown, Kevin Gabbard"),
-         h2("Faculty Lead"),
+         h2("Project Leads"),
          img(src='second_photo_for_shawn_0.jpg', width="150px", height="200px"), 
-         img(src='cass_dorius_0.jpg', width="150px", height="200px")
+         img(src='cass_dorius_0.jpg', width="150px", height="200px"),
+         img(src='heike.jpg', width = "150px", height = "200px")
 #         h2("Acknowledgements"),
 #         p("[Optional: You can also include external collaborators in this section or a separate section.]")
        )
@@ -878,7 +881,7 @@ server <- function(input, output, session){
     
     
     
-    datasets = c("Other Resources", "Churches", "Childcare Providers", "Colleges and Universities", "Iowa Works Offices")
+    datasets = c("Childcare Providers", "Colleges and Universities", "Iowa Works Offices")
     colors <- RColorBrewer::brewer.pal(n = length(datasets), name="Dark2")
     
     pal <- colorFactor(
@@ -893,26 +896,18 @@ server <- function(input, output, session){
       addTiles() %>%
       addPolygons(data = st_transform(ia_counties, crs='+proj=longlat +datum=WGS84'),
                   weight = 1, color="#333333") %>%
-      addMarkers(lng = ~longitude, lat = ~latitude, label = ~name, icon = one,
-                 popup = paste0(iowa_211$name, "<br>", iowa_211$search_address, "<br>", iowa_211$phone),
-                 data = iowa_211,
-                 group = datasets[1]) %>%
-      addMarkers(label = ~name, icon = two,
-                 popup = paste0(churches$name, "<br>", churches$description),
-                 data = churches,
-                 group = datasets[2]) %>%
-      addMarkers(lng = ~longitude, lat = ~latitude, label = ~provider_business_name, icon = three,
+      addMarkers(lng = ~longitude, lat = ~latitude, label = ~provider_business_name, icon = one,
                  popup = paste0(childcare$provider_business_name, "<br>", childcare$search_address, "<br>", childcare$phone),
                  data = childcare,
-                 group = datasets[3]) %>%
-      addMarkers(lng = ~longitude, lat = ~latitude, label = ~name, icon = four,
+                 group = datasets[1]) %>%
+      addMarkers(lng = ~longitude, lat = ~latitude, label = ~name, icon = two,
                  popup = paste0(colleges$name, "<br>", colleges$city, "<br>", colleges$type),
                  data = colleges,
-                 group = datasets[4]) %>%
-      addMarkers(lng = ~Longitude, lat = ~Latitude, label = ~NAME, icon = five,
+                 group = datasets[2]) %>%
+      addMarkers(lng = ~Longitude, lat = ~Latitude, label = ~NAME, icon = three,
                  popup = paste0(iowaworks$NAME, "<br>", iowaworks$formatted_, "<br>", iowaworks$PHONE, "<br>", iowaworks$LINK),
                  data = iowaworks,
-                 group = datasets[5]) %>%
+                 group = datasets[3]) %>%
       addLayersControl(
         overlayGroups = datasets,
         options = layersControlOptions(collapsed = TRUE)
@@ -1248,12 +1243,6 @@ server <- function(input, output, session){
     # Color palette
     colors <- RColorBrewer::brewer.pal(n = length(filter_checkbox), name="Dark2")
     
-    label <- paste(sep="<br>",
-                   df$Name,
-                   df$Address,
-                   df$Phone)
-    
-    
     pal <- colorFactor(
       palette = colors,
       levels = filter_checkbox)
@@ -1267,15 +1256,18 @@ server <- function(input, output, session){
                   weight = 1, color="#333333") %>%
       addCircleMarkers(lng = ~lon, lat = ~lat,
                        radius = 1, color = ~pal("Recovery Housing"), fillOpacity = 0.5,
-                       popup = label, label= ~Name, data = Recovery_Reco,
+                       popup = paste(sep = "<br>", Recovery_Reco$Name, Recovery_Reco$Address, Recovery_Reco$Phone), 
+                       label= ~Name, data = Recovery_Reco,
                        group = "Recovery Housing") %>%
       addCircleMarkers(lng = ~lon, lat = ~lat,
                        radius = 1, color = ~pal("Inpatient Treatment"), fillOpacity = 0.5,
-                       popup = label, label= ~Name, data = Recovery_In,
+                       popup = paste(sep = "<br>", Recovery_In$Name, Recovery_In$Address, Recovery_In$Phone), 
+                       label= ~Name, data = Recovery_In,
                        group = "Inpatient Treatment") %>%
       addCircleMarkers(lng = ~lon, lat = ~lat,
                        radius = 1, color = ~pal("Outpatient Treatment"), fillOpacity = 0.5,
-                       popup = label, label= ~Name, data = Recovery_Out,
+                       popup = paste(sep = "<br>", Recovery_Out$Name, Recovery_Out$Address, Recovery_Out$Phone), 
+                       label= ~Name, data = Recovery_Out,
                        group = "Outpatient Treatment") %>%
       addLayersControl(
         overlayGroups = filter_checkbox,
@@ -1370,7 +1362,7 @@ server <- function(input, output, session){
                   weight = 1, color="#333333") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon = Icon_AlcAnonymous, 
-                 popup=label, label = ~meeting, data= Meetings_AA_data(),
+                 popup= label, label = ~meeting, data= Meetings_AA_data(),
                  group = "Alcoholics Anonymous") %>%
       addMarkers(lng = ~longitude, lat = ~latitude,
                  icon=Icon_AlAnon,
