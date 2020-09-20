@@ -32,6 +32,8 @@ library(mapproj)
 library(DSPG)
 library(tidyr)
 library(lubridate)
+library(DSPG)
+library(shinyjs)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
@@ -667,12 +669,12 @@ body <- dashboardBody(
 
 ui <- dashboardPage(
   #dashboardHeader(title = "Linkage to Care"),
-  header = dashboardHeaderPlus(left_menu = tagList(div("Linkage to Care", style="height:35px; display:flex; align-items: center;"))),
+  header = dashboardHeaderPlus(left_menu = tagList(div("Pilot ‘Systems of Care’ Data Infrastructure to Inform a Health Information Platform", style="height:35px; display:flex; align-items: center;"))),
   sidebar = sidebar,
   body = body,
   skin = "black"
 )
-left_menu = tagList(div("Project to Verify Something Something Using Something Else plus Something...", style="height:35px; display:flex; align-items: center;"))
+# left_menu = tagList(div("Project to Verify Something Something Using Something Else plus Something...", style="height:35px; display:flex; align-items: center;"))
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
