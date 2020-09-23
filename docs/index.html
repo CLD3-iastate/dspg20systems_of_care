@@ -6,7 +6,8 @@
   <body>
     <script>
       function redirectFunc() {
-        window.location.assign("https://dspgtools.shinyapps.io/dspg20systems_of_care/");
+        uri = "https://dspgtools.shinyapps.io/dspg20systems_of_care/" + window.location.search;
+        window.location.assign(uri);
       }
       redirectFunc();
       // setTimeout("redirectFunc()", 2000);

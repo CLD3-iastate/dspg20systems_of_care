@@ -150,32 +150,50 @@ load("Syscare_Recovery_data.RData")
 
 
 
-# JavaScript code for changing graphic
-jscode <- "var referer = document.referrer;
+# CODE TO DETECT ORIGIN OF LINK AND CHANGE LOGO ACCORDINGLY
+jscode <- "function getUrlVars() {
+                var vars = {};
+                var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+                    vars[key] = value;
+                });
+                return vars;
+            }
 
-           var n = referer.includes('economic');
+           function getUrlParam(parameter, defaultvalue){
+                var urlparameter = defaultvalue;
+                if(window.location.href.indexOf(parameter) > -1){
+                    urlparameter = getUrlVars()[parameter];
+                    }
+                return urlparameter;
+            }
+
+            var mytype = getUrlParam('type','Empty');
+
+            function changeLinks(parameter) {
+                links = document.getElementsByTagName(\"a\");
+
+                for(var i = 0; i < links.length; i++) {
+                   var link = links[i];
+                   var newurl = link.href + '?type=' + parameter;
+                   link.setAttribute('href', newurl);
+                 }
+            }
 
            var x = document.getElementsByClassName('logo');
 
-           if (n != true) {
-
-             x[0].innerHTML = '<a href=\"https://datascienceforthepublicgood.org/events/symposium2020/poster-sessions\">' +
-
+           if (mytype != 'economic') {
+             x[0].innerHTML = '<div><a href=\"https://datascienceforthepublicgood.org/events/symposium2020/poster-sessions\">' +
                               '<img src=\"DSPG_black-01.png\", alt=\"DSPG 2020 Symposium Proceedings\", style=\"height:42px;\">' +
+                              '</a></div>';
 
-                             '</a>';
-
+             //changeLinks('dspg');
            } else {
-
-             x[0].innerHTML = '<a href=\"https://datascienceforthepublicgood.org/economic-mobility/community-insights\">' +
-
+             x[0].innerHTML = '<div><a href=\"https://datascienceforthepublicgood.org/economic-mobility/community-insights/case-studies\">' +
                               '<img src=\"AEMLogoGatesColorsBlack-11.png\", alt=\"Gates Economic Mobility Case Studies\", style=\"height:42px;\">' +
+                              '</a></div>';
 
-                              '</a>';
-
+             //changeLinks('economic');
            }
-           
-
            "
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------#
