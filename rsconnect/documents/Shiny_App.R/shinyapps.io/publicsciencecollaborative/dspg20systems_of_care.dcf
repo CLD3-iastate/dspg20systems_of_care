@@ -1,0 +1,14 @@
+name: dspg20systems_of_care
+title: dspg20systems_of_care
+username:
+account: publicsciencecollaborative
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 7775977
+bundleId: 6573975
+url: https://publicsciencecollaborative.shinyapps.io/dspg20systems_of_care/
+when: 1669837328.51597
+lastSyncTime: 1669837328.51597
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: docs/index.html|stuff
